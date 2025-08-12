@@ -76,27 +76,27 @@
 
             for (let i = 0; i < 60; i++) {
                 const dayOfWeek = currentDate.getDay();
-                const dateKey = currentDate.toISOString().split('T')[0];
-                if (!generatedSchedule.find(item => item.dateKey === dateKey)) {
-                    generatedSchedule.push({ dateKey: dateKey, date: new Date(currentDate), shifts: [] });
-                }
-                const currentDaySchedule = generatedSchedule.find(item => item.dateKey === dateKey);
+                const schedule = {
+                    date: new Date(currentDate),
+                    shifts: []
+                };
 
-                if (dayOfWeek >= 1 && dayOfWeek <= 5) {
-                    const morningGroup = GROUPS_ORDER[(START_GROUP_INDEX + i * 2) % GROUPS_ORDER.length];
-                    const afternoonGroup = GROUPS_ORDER[(START_GROUP_INDEX + i * 2 + 1) % GROUPS_ORDER.length];
-                    if (!currentDaySchedule.shifts.some(shift => shift.time === 'Pagi')) {
-                        currentDaySchedule.shifts.push({ time: 'Pagi', group: morningGroup });
-                    }
-                    if (!currentDaySchedule.shifts.some(shift => shift.time === 'Sore')) {
-                        currentDaySchedule.shifts.push({ time: 'Sore', group: afternoonGroup });
-                    }
-                } else {
-                    const afternoonGroup = GROUPS_ORDER[(START_GROUP_INDEX + i) % GROUPS_ORDER.length];
-                    if (!currentDaySchedule.shifts.some(shift => shift.time === 'Sore')) {
-                        currentDaySchedule.shifts.push({ time: 'Sore', group: afternoonGroup });
-                    }
+                if (dayOfWeek >= 1 && dayOfWeek <= 5) { // Senin sampai Jumat
+                    const morningGroup = GROUPS_ORDER[currentGroupIndex % GROUPS_ORDER.length];
+                    currentGroupIndex++;
+                    const afternoonGroup = GROUPS_ORDER[currentGroupIndex % GROUPS_ORDER.length];
+                    currentGroupIndex++;
+
+                    schedule.shifts.push({ time: 'PAGI', group: morningGroup });
+                    schedule.shifts.push({ time: 'SORE', group: afternoonGroup });
+                } else { // Sabtu (6) dan Minggu (0)
+                    const afternoonGroup = GROUPS_ORDER[currentGroupIndex % GROUPS_ORDER.length];
+                    currentGroupIndex++;
+
+                    schedule.shifts.push({ time: 'SORE', group: afternoonGroup });
                 }
+
+                generatedSchedule.push(schedule);
                 currentDate.setDate(currentDate.getDate() + 1);
             }
         }
@@ -172,35 +172,35 @@
             const personNameInput = document.getElementById('person-name').value.trim().toLowerCase();
             const roomNumberInput = document.getElementById('room-number').value.trim();
 
-            const filteredSchedule = generatedSchedule.filter(day => {
-                let dayMatches = false;
-                const dayDate = day.date.toISOString().split('T')[0];
+            const filteredSchedule = [];
 
-                // Tanggal Spesifik
-                if (specificDateInput && dayDate !== specificDateInput) {
-                    return false;
-                }
-
-                // Rentang Tanggal
-                if (startDateInput && new Date(dayDate) < new Date(startDateInput)) {
-                    return false;
-                }
-                if (endDateInput && new Date(dayDate) > new Date(endDateInput)) {
-                    return false;
-                }
-
-                // Filter by a combination of the other inputs
-                dayMatches = day.shifts.some(shift => {
-                    let shiftMatches = true;
+            // Flat the schedule and filter directly at the shift level
+            generatedSchedule.forEach(day => {
+                day.shifts.forEach(shift => {
+                    let matches = true;
                     
-                    // Nama Grup
-                    if (groupNameInput && !shift.group.toLowerCase().includes(groupNameInput)) {
-                        shiftMatches = false;
-                    }
-                    if (!shiftMatches) return false;
+                    const dayDate = day.date.toISOString().split('T')[0];
 
-                    // Nama Orang atau Nomor Kamar
-                    if (personNameInput || roomNumberInput) {
+                    // Filter Tanggal Spesifik
+                    if (specificDateInput && dayDate !== specificDateInput) {
+                        matches = false;
+                    }
+                    
+                    // Filter Rentang Tanggal
+                    if (startDateInput && new Date(dayDate) < new Date(startDateInput)) {
+                        matches = false;
+                    }
+                    if (endDateInput && new Date(dayDate) > new Date(endDateInput)) {
+                        matches = false;
+                    }
+
+                    // Filter Nama Grup
+                    if (groupNameInput && !shift.group.toLowerCase().includes(groupNameInput)) {
+                        matches = false;
+                    }
+                    
+                    // Filter Nama Orang atau Nomor Kamar
+                    if ((personNameInput || roomNumberInput) && matches) {
                         let foundPerson = false;
                         const groupData = allToubanData[shift.group];
                         if (groupData) {
@@ -215,48 +215,14 @@
                             });
                         }
                         if (!foundPerson) {
-                            shiftMatches = false;
+                            matches = false;
                         }
                     }
-                    
-                    return shiftMatches;
-                });
-                
-                // If a day has at least one matching shift, we keep the day.
-                if (dayMatches) {
-                    // But we must filter the shifts within that day to only show the matching ones.
-                    day.shifts = day.shifts.filter(shift => {
-                        let shiftMatches = true;
 
-                        // Nama Grup
-                        if (groupNameInput && !shift.group.toLowerCase().includes(groupNameInput)) {
-                            shiftMatches = false;
-                        }
-                        
-                        // Nama Orang atau Nomor Kamar
-                        if (personNameInput || roomNumberInput) {
-                            let foundPerson = false;
-                            const groupData = allToubanData[shift.group];
-                            if (groupData) {
-                                foundPerson = groupData.some(member => {
-                                    const memberString = Object.values(member)[0];
-                                    const [name, room] = memberString.split(/(\s\d+)$/);
-                                    
-                                    const nameMatch = personNameInput && name.toLowerCase().includes(personNameInput);
-                                    const roomMatch = roomNumberInput && room && room.trim() === roomNumberInput;
-                                    
-                                    return nameMatch || roomMatch;
-                                });
-                            }
-                            if (!foundPerson) {
-                                shiftMatches = false;
-                            }
-                        }
-                        return shiftMatches;
-                    });
-                }
-                
-                return dayMatches;
+                    if (matches) {
+                        filteredSchedule.push({ date: day.date, shifts: [shift] });
+                    }
+                });
             });
 
             renderSchedule(filteredSchedule);
