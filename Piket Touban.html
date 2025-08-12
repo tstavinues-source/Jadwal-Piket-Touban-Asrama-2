@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Piket Asrama</title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Jadwal Piket Asrama 2</h1>
+        </header>
+
+        <main>
+            <div class="search-container">
+                <div class="search-field">
+                    <label for="group-name">Nama Grup:</label>
+                    <input type="text" id="group-name" placeholder="Contoh: Grup H">
+                </div>
+                <div class="search-field">
+                    <label for="start-date">Rentang Tanggal (Mulai):</label>
+                    <input type="date" id="start-date">
+                </div>
+                <div class="search-field">
+                    <label for="end-date">Rentang Tanggal (Selesai):</label>
+                    <input type="date" id="end-date">
+                </div>
+                <div class="search-field">
+                    <label for="specific-date">Tanggal Spesifik:</label>
+                    <input type="date" id="specific-date">
+                </div>
+                <div class="search-field">
+                    <label for="person-name">Nama Orang:</label>
+                    <input type="text" id="person-name" placeholder="Contoh: Alex Sandra">
+                </div>
+                <div class="search-field">
+                    <label for="room-number">Nomor Kamar:</label>
+                    <input type="text" id="room-number" placeholder="Contoh: 226">
+                </div>
+                <div class="search-buttons">
+                    <button onclick="filterSchedule()">Cari Jadwal</button>
+                    <button onclick="resetFilters()">Reset</button>
+                </div>
+            </div>
+
+            <div id="schedule-output">
+                </div>
+        </main>
+    </div>
+
+    <script>
+        const GROUPS_ORDER = ['grup A', 'grup B', 'grup C', 'grup D', 'grup E', 'grup F', 'grup G', 'grup H', 'grup I', 'grup J', 'grup K', 'grup L', 'grup M', 'grup N', 'grup O'];
+        const START_DATE = new Date('2025-08-12'); // Tanggal mulai: Selasa, 12 Agustus 2025
+        const START_GROUP_INDEX = 7; // Grup H (indeks ke-7)
+
+        let allToubanData = {};
+        let generatedSchedule = [];
+
+        async function fetchToubanData() {
+            try {
+                const response = await fetch('Touban.json');
+                allToubanData = await response.json();
+                generateSchedule();
+                renderSchedule(generatedSchedule);
+            } catch (error) {
+                console.error('Gagal memuat data Touban:', error);
+                document.getElementById('schedule-output').innerHTML = '<p>Gagal memuat jadwal. Silakan coba lagi.</p>';
+            }
+        }
+
+        function generateSchedule() {
+            generatedSchedule = [];
+            let currentGroupIndex = START_GROUP_INDEX;
+            let currentDate = new Date(START_DATE);
+
+            for (let i = 0; i < 60; i++) {
+                const dayOfWeek = currentDate.getDay();
+                const dateKey = currentDate.toISOString().split('T')[0];
+                if (!generatedSchedule.find(item => item.dateKey === dateKey)) {
+                    generatedSchedule.push({ dateKey: dateKey, date: new Date(currentDate), shifts: [] });
+                }
+                const currentDaySchedule = generatedSchedule.find(item => item.dateKey === dateKey);
+
+                if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+                    const morningGroup = GROUPS_ORDER[(START_GROUP_INDEX + i * 2) % GROUPS_ORDER.length];
+                    const afternoonGroup = GROUPS_ORDER[(START_GROUP_INDEX + i * 2 + 1) % GROUPS_ORDER.length];
+                    if (!currentDaySchedule.shifts.some(shift => shift.time === 'Pagi')) {
+                        currentDaySchedule.shifts.push({ time: 'Pagi', group: morningGroup });
+                    }
+                    if (!currentDaySchedule.shifts.some(shift => shift.time === 'Sore')) {
+                        currentDaySchedule.shifts.push({ time: 'Sore', group: afternoonGroup });
+                    }
+                } else {
+                    const afternoonGroup = GROUPS_ORDER[(START_GROUP_INDEX + i) % GROUPS_ORDER.length];
+                    if (!currentDaySchedule.shifts.some(shift => shift.time === 'Sore')) {
+                        currentDaySchedule.shifts.push({ time: 'Sore', group: afternoonGroup });
+                    }
+                }
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+        }
+
+        function renderSchedule(scheduleToRender) {
+            const outputDiv = document.getElementById('schedule-output');
+            outputDiv.innerHTML = '';
+
+            if (scheduleToRender.length === 0) {
+                outputDiv.innerHTML = '<p>Tidak ada jadwal yang cocok.</p>';
+                return;
+            }
+
+            // Flaten the schedule to handle filtering at shift level
+            let flatSchedule = [];
+            scheduleToRender.forEach(day => {
+                day.shifts.forEach(shift => {
+                    flatSchedule.push({
+                        date: day.date,
+                        time: shift.time,
+                        group: shift.group
+                    });
+                });
+            });
+
+            flatSchedule.forEach(shiftData => {
+                const dateStr = shiftData.date.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                const card = document.createElement('div');
+                card.className = 'schedule-card';
+                
+                let html = `<div class="schedule-date">${dateStr}</div>`;
+                
+                const groupData = allToubanData[shiftData.group];
+                
+                let membersHtml = '';
+                if (groupData) {
+                    membersHtml = groupData.map((member, index) => {
+                        const memberString = Object.values(member)[0];
+                        const [name, room] = memberString.split(/(\s\d+)$/);
+                        const isKetua = index === 0;
+                        const nameClass = isKetua ? 'member-name ketua' : 'member-name';
+                        return `
+                            <li class="member-item">
+                                <span class="${nameClass}">${name}</span>
+                                <span class="room-number">${room ? room.trim() : ''}</span>
+                            </li>
+                        `;
+                    }).join('');
+                } else {
+                    membersHtml = '<li>Data grup tidak ditemukan.</li>';
+                }
+
+                html += `
+                    <div class="shift">
+                        <h3>Piket ${shiftData.time}</h3>
+                        <p><strong>Grup: ${shiftData.group.split(' ')[1]}</strong></p>
+                        <ul class="member-list">
+                            ${membersHtml}
+                        </ul>
+                    </div>
+                `;
+                
+                card.innerHTML = html;
+                outputDiv.appendChild(card);
+            });
+        }
+
+        function filterSchedule() {
+            const groupNameInput = document.getElementById('group-name').value.trim().toLowerCase();
+            const startDateInput = document.getElementById('start-date').value;
+            const endDateInput = document.getElementById('end-date').value;
+            const specificDateInput = document.getElementById('specific-date').value;
+            const personNameInput = document.getElementById('person-name').value.trim().toLowerCase();
+            const roomNumberInput = document.getElementById('room-number').value.trim();
+
+            const filteredSchedule = generatedSchedule.filter(day => {
+                let dayMatches = false;
+                const dayDate = day.date.toISOString().split('T')[0];
+
+                // Tanggal Spesifik
+                if (specificDateInput && dayDate !== specificDateInput) {
+                    return false;
+                }
+
+                // Rentang Tanggal
+                if (startDateInput && new Date(dayDate) < new Date(startDateInput)) {
+                    return false;
+                }
+                if (endDateInput && new Date(dayDate) > new Date(endDateInput)) {
+                    return false;
+                }
+
+                // Filter by a combination of the other inputs
+                dayMatches = day.shifts.some(shift => {
+                    let shiftMatches = true;
+                    
+                    // Nama Grup
+                    if (groupNameInput && !shift.group.toLowerCase().includes(groupNameInput)) {
+                        shiftMatches = false;
+                    }
+                    if (!shiftMatches) return false;
+
+                    // Nama Orang atau Nomor Kamar
+                    if (personNameInput || roomNumberInput) {
+                        let foundPerson = false;
+                        const groupData = allToubanData[shift.group];
+                        if (groupData) {
+                            foundPerson = groupData.some(member => {
+                                const memberString = Object.values(member)[0];
+                                const [name, room] = memberString.split(/(\s\d+)$/);
+                                
+                                const nameMatch = personNameInput && name.toLowerCase().includes(personNameInput);
+                                const roomMatch = roomNumberInput && room && room.trim() === roomNumberInput;
+                                
+                                return nameMatch || roomMatch;
+                            });
+                        }
+                        if (!foundPerson) {
+                            shiftMatches = false;
+                        }
+                    }
+                    
+                    return shiftMatches;
+                });
+                
+                // If a day has at least one matching shift, we keep the day.
+                if (dayMatches) {
+                    // But we must filter the shifts within that day to only show the matching ones.
+                    day.shifts = day.shifts.filter(shift => {
+                        let shiftMatches = true;
+
+                        // Nama Grup
+                        if (groupNameInput && !shift.group.toLowerCase().includes(groupNameInput)) {
+                            shiftMatches = false;
+                        }
+                        
+                        // Nama Orang atau Nomor Kamar
+                        if (personNameInput || roomNumberInput) {
+                            let foundPerson = false;
+                            const groupData = allToubanData[shift.group];
+                            if (groupData) {
+                                foundPerson = groupData.some(member => {
+                                    const memberString = Object.values(member)[0];
+                                    const [name, room] = memberString.split(/(\s\d+)$/);
+                                    
+                                    const nameMatch = personNameInput && name.toLowerCase().includes(personNameInput);
+                                    const roomMatch = roomNumberInput && room && room.trim() === roomNumberInput;
+                                    
+                                    return nameMatch || roomMatch;
+                                });
+                            }
+                            if (!foundPerson) {
+                                shiftMatches = false;
+                            }
+                        }
+                        return shiftMatches;
+                    });
+                }
+                
+                return dayMatches;
+            });
+
+            renderSchedule(filteredSchedule);
+        }
+
+        function resetFilters() {
+            document.getElementById('group-name').value = '';
+            document.getElementById('start-date').value = '';
+            document.getElementById('end-date').value = '';
+            document.getElementById('specific-date').value = '';
+            document.getElementById('person-name').value = '';
+            document.getElementById('room-number').value = '';
+            renderSchedule(generatedSchedule);
+        }
+
+        window.onload = fetchToubanData;
+    </script>
+</body>
+</html>

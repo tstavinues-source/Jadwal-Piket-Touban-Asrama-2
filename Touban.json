@@ -1,0 +1,371 @@
+{
+  "grup A": [
+    {
+      "Ketua": "Dito Aryanto 225"
+    },
+    {
+      "Anggota 1": "Fani Alfarizi 223"
+    },
+    {
+      "Anggota 2": "Indra Pranata 224"
+    },
+    {
+      "Anggota 3": "Imam Kartiwa 221"
+    },
+    {
+      "Anggota 4": "M Nogi Ilham 224"
+    },
+    {
+      "Anggota 5": "Ades Nur R 221"
+    },
+    {
+      "Anggota 6": "Adin Aprianto 221"
+    },
+    {
+      "Anggota 7": "Andriyan Nur Syafii 223"
+    }
+  ],
+  "grup B": [
+    {
+      "Ketua": "Gungun Gumilar 224"
+    },
+    {
+      "Anggota 1": "Aris Prayogi 224"
+    },
+    {
+      "Anggota 2": "Farhan Saefulillah 221"
+    },
+    {
+      "Anggota 3": "Hedi Yusuf 221"
+    },
+    {
+      "Anggota 4": "Bagas Aldi N. 221"
+    },
+    {
+      "Anggota 5": "Aditya Bagus P 221"
+    },
+    {
+      "Anggota 6": "Arizal Bagus N 222"
+    },
+    {
+      "Anggota 7": "Budi 223"
+    }
+  ],
+  "grup C": [
+    {
+      "Ketua": "Windu Ardiyanto 221"
+    },
+    {
+      "Anggota 1": "Dhani Ramadhan 222"
+    },
+    {
+      "Anggota 2": "Fikri Muzaki 224"
+    },
+    {
+      "Anggota 3": "Adi Mulhakim 226"
+    },
+    {
+      "Anggota 4": "Arya Dwi P. 226"
+    },
+    {
+      "Anggota 5": "Sahrul Ihsan 226"
+    },
+    {
+      "Anggota 6": "M Aris Rizaldi 222"
+    },
+    {
+      "Anggota 7": "Puji Kawitan J 222"
+    }
+  ],
+  "grup D": [
+    {
+      "Ketua": "Dhidan H. 222"
+    },
+    {
+      "Anggota 1": "Arga Nuril 227"
+    },
+    {
+      "Anggota 2": "M.Syafrudin A. 222"
+    },
+    {
+      "Anggota 3": "M.Rizki Silpana 222"
+    },
+    {
+      "Anggota 4": "Edo Saputra 227"
+    },
+    {
+      "Anggota 5": "Muhammad Fahri K 225"
+    },
+    {
+      "Anggota 6": "Qyoko Krisna A 222"
+    },
+    {
+      "Anggota 7": "Saipul Anwar M 222"
+    }
+  ],
+  "grup E": [
+    {
+      "Ketua": "Martin Maulana 222"
+    },
+    {
+      "Anggota 1": "Irsyadul Ibad 222"
+    },
+    {
+      "Anggota 2": "Faisal Abdillah 222"
+    },
+    {
+      "Anggota 3": "Restu Rivaldi 221"
+    },
+    {
+      "Anggota 4": "M. Rozan Sidik 221"
+    },
+    {
+      "Anggota 5": "Salman Alfarizi 222"
+    },
+    {
+      "Anggota 6": "Sohibin Abdullah 222"
+    }
+  ],
+  "grup F": [
+    {
+      "Ketua": "Dany raharjo 223"
+    },
+    {
+      "Anggota 1": "Indri Permadi 223"
+    },
+    {
+      "Anggota 2": "Kelvin Firmansyah 223"
+    },
+    {
+      "Anggota 3": "Rochmat 223"
+    },
+    {
+      "Anggota 4": "Alvin Triyana 225"
+    },
+    {
+      "Anggota 5": "Yana Suryana 222"
+    },
+    {
+      "Anggota 6": "Yoga Prabowo 222"
+    }
+  ],
+  "grup G": [
+    {
+      "Ketua": "Zainal M Arifin 226"
+    },
+    {
+      "Anggota 1": "Alex Pujianto 223"
+    },
+    {
+      "Anggota 2": "Agung Triyanto 225"
+    },
+    {
+      "Anggota 3": "Salis Irawan 223"
+    },
+    {
+      "Anggota 4": "M. Adit 223"
+    },
+    {
+      "Anggota 5": "Yustiso Ringga S 222"
+    },
+    {
+      "Anggota 6": "Rosadi 223"
+    }
+  ],
+  "grup H": [
+    {
+      "Ketua": "Alex Sandra 226"
+    },
+    {
+      "Anggota 1": "Yusup Ramdhoni 225"
+    },
+    {
+      "Anggota 2": "Tio Adhi Setya 225"
+    },
+    {
+      "Anggota 3": "Abdul Latif R 226"
+    },
+    {
+      "Anggota 4": "Arya Danu S 223"
+    },
+    {
+      "Anggota 5": "Maulana Khoirul K 225"
+    },
+    {
+      "Anggota 6": "Yudha Gusmawan 226"
+    }
+  ],
+  "grup I": [
+    {
+      "Ketua": "Muhammad Husni T 223"
+    },
+    {
+      "Anggota 1": "Istamar Alkaf 221"
+    },
+    {
+      "Anggota 2": "Wisnu Bimantoro 225"
+    },
+    {
+      "Anggota 3": "Ahmad Khasani 225"
+    },
+    {
+      "Anggota 4": "Cornelius Felix R 223"
+    },
+    {
+      "Anggota 5": "Rafli 224"
+    },
+    {
+      "Anggota 6": "M Syahrul 226"
+    }
+  ],
+  "grup J": [
+    {
+      "Ketua": "Muhammad Agus T 223"
+    },
+    {
+      "Anggota 1": "Muhammad Nizar AF 223"
+    },
+    {
+      "Anggota 2": "Yasin Nuralim 225"
+    },
+    {
+      "Anggota 3": "Ajad Jumadi 225"
+    },
+    {
+      "Anggota 4": "Saleh Hudin 224"
+    },
+    {
+      "Anggota 5": "Ibrahim Syah K 224"
+    },
+    {
+      "Anggota 6": "Devano Roma K 224"
+    }
+  ],
+  "grup K": [
+    {
+      "Ketua": "Dicky Wahyudi 224"
+    },
+    {
+      "Anggota 1": "Muhamad Rizki 226"
+    },
+    {
+      "Anggota 2": "Fikri puji yudistio 225"
+    },
+    {
+      "Anggota 3": "Orlando Prayudha 223"
+    },
+    {
+      "Anggota 4": "Triyan Ardiansyah 221"
+    },
+    {
+      "Anggota 5": "M. Ihsan Al Alhaq 221"
+    },
+    {
+      "Anggota 6": "Farhan Apriansyah 224"
+    },
+    {
+      "Anggota 7": "Dede Supriyadi 224"
+    }
+  ],
+  "grup L": [
+    {
+      "Ketua": "M. Albar H 221"
+    },
+    {
+      "Anggota 1": "Firmansyah 225"
+    },
+    {
+      "Anggota 2": "Rizki Julianto 225"
+    },
+    {
+      "Anggota 3": "Juprianti Anwar 225"
+    },
+    {
+      "Anggota 4": "M Novel Tohal A 225"
+    },
+    {
+      "Anggota 5": "Goga Nirwa P 224"
+    },
+    {
+      "Anggota 6": "M Rayhan Alfauzi 226"
+    }
+  ],
+  "grup M": [
+    {
+      "Ketua": "Hasan 226"
+    },
+    {
+      "Anggota 1": "Edi Jumari 226"
+    },
+    {
+      "Anggota 2": "M. Maruf A 222"
+    },
+    {
+      "Anggota 3": "Yudi Harsono 225"
+    },
+    {
+      "Anggota 4": "Akmal Rezky 225"
+    },
+    {
+      "Anggota 5": "Pahmi Bahara P 225"
+    },
+    {
+      "Anggota 6": "Bayu Nur Fajar 225"
+    },
+    {
+      "Anggota 7": "A. Miftahul Huda 224"
+    }
+  ],
+  "grup N": [
+    {
+      "Ketua": "Muhammad Ridlo 224"
+    },
+    {
+      "Anggota 1": "Bayu Ristanto 226"
+    },
+    {
+      "Anggota 2": "Todi Damayanto 227"
+    },
+    {
+      "Anggota 3": "M. Hamdika Muntajir 227"
+    },
+    {
+      "Anggota 4": "Robby Achwal M 227"
+    },
+    {
+      "Anggota 5": "Andri Setiawan 222"
+    },
+    {
+      "Anggota 6": "Imam Arief A 225"
+    },
+    {
+      "Anggota 7": "M Choerul Falah 225"
+    }
+  ],
+  "grup O": [
+    {
+      "Ketua": "Avicena 224"
+    },
+    {
+      "Anggota 1": "Apriyanto 227"
+    },
+    {
+      "Anggota 2": "Fajar Nurkholis 226"
+    },
+    {
+      "Anggota 3": "Syafiq Zakaria 227"
+    },
+    {
+      "Anggota 4": "Saripudin 225"
+    },
+    {
+      "Anggota 5": "Khoirul Anam 227"
+    },
+    {
+      "Anggota 6": "Maulana 225"
+    },
+    {
+      "Anggota 7": "M Shandy Ilham A 227"
+    }
+  ]
+}
