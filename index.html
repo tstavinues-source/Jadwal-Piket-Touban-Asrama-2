@@ -17,11 +17,15 @@
         body { background-color: var(--bg-color); color: var(--primary-text-color); font-family: 'Roboto', sans-serif; margin: 0; padding: 1rem; }
         .container { max-width: 1400px; margin: auto; }
         .header h1 { font-family: 'Orbitron', sans-serif; text-align: center; font-size: 2.5rem; font-weight: 700; color: var(--neon-cyan); text-shadow: 0 0 5px var(--neon-cyan), 0 0 15px var(--neon-cyan), 0 0 30px var(--neon-cyan-shadow); margin-bottom: 2rem; }
-        .filters { background-color: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-        .filter-group { display: flex; flex-direction: column; }
-        .filter-group label { margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--secondary-text-color); font-weight: 300; }
-        .filter-group input, .filter-group select { background-color: var(--input-bg); color: var(--primary-text-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.75rem; font-size: 1rem; transition: all 0.2s ease-in-out; }
-        .filter-group input:focus, .filter-group select:focus { outline: none; border-color: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan-shadow); }
+        
+        .controls-section { background-color: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 2rem; }
+        .controls-section h2 { margin-top: 0; font-family: 'Orbitron', sans-serif; color: var(--neon-cyan); font-weight: 500; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; margin-bottom: 1rem; }
+        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .control-group { display: flex; flex-direction: column; }
+        .control-group label { margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--secondary-text-color); font-weight: 300; }
+        .control-group input, .control-group select { background-color: var(--input-bg); color: var(--primary-text-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.75rem; font-size: 1rem; transition: all 0.2s ease-in-out; }
+        .control-group input:focus, .control-group select:focus { outline: none; border-color: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan-shadow); }
+        
         #results { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
         .schedule-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; }
         .schedule-card:hover { transform: translateY(-5px); box-shadow: 0 0 25px var(--neon-cyan-shadow); }
@@ -35,22 +39,25 @@
         .session-group { flex-grow: 1; font-size: 1.1rem; cursor: pointer; transition: color 0.2s; }
         .session-group:hover { color: var(--neon-cyan); }
         #status { text-align: center; font-size: 1.25rem; padding: 3rem; color: var(--secondary-text-color); }
+
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 1rem; box-sizing: border-box;}
         .modal-content { background-color: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; }
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem; }
         .modal-title { font-size: 1.5rem; color: var(--neon-cyan); font-family: 'Orbitron', sans-serif; }
         .close-button { font-size: 2rem; color: var(--secondary-text-color); cursor: pointer; background: none; border: none; }
         .member-list { list-style: none; padding: 0; max-height: 300px; overflow-y: auto; margin-bottom: 1.5rem;}
-        .member-list li { padding: 0.75rem 0; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; }
+        .member-list li { padding: 0.75rem 0; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
         .member-list li:last-child { border-bottom: none; }
-        .member-name { font-weight: 400; }
-        .member-room { font-weight: 300; color: var(--secondary-text-color); }
+        /* Style untuk Ketua Grup */
+        .member-list .member-leader .member-name {
+            color: var(--admin-yellow);
+            font-weight: 700;
+        }
         .whatsapp-button { display: block; background-color: var(--whatsapp-green); color: white; text-align: center; padding: 0.75rem; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background-color 0.2s; }
-        .whatsapp-button:hover { background-color: #1EBE57; }
+        
         @media (max-width: 768px) {
-            body { padding: 0.5rem; }
-            .header h1 { font-size: 1.8rem; }
-            .filters { grid-template-columns: 1fr; padding: 1rem; }
+            body { padding: 0.5rem; } .header h1 { font-size: 1.8rem; }
+            .grid-layout { grid-template-columns: 1fr; }
             .card-header .date-info .date { font-size: 1.2rem; }
         }
     </style>
@@ -58,37 +65,16 @@
 </head>
 <body>
     <div class="container">
-        <header class="header">
-            <h1>Dashboard Jadwal Piket</h1>
-        </header>
+        <header class="header"><h1>Dashboard Jadwal Piket</h1></header>
 
-        <!-- Bagian filter untuk pencarian -->
-        <div class="filters">
-            <div class="filter-group">
-                <label for="startDate">Dari Tanggal</label>
-                <input type="date" id="startDate">
-            </div>
-            <div class="filter-group">
-                <label for="endDate">Sampai Tanggal</label>
-                <input type="date" id="endDate">
-            </div>
-            <div class="filter-group">
-                <label for="groupSearch">Cari Grup</label>
-                <select id="groupSearch">
-                    <option value="">Semua Grup</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label for="sessionSearch">Sesi</label>
-                <select id="sessionSearch">
-                    <option value="">Semua Sesi</option>
-                    <option value="Pagi">Pagi</option>
-                    <option value="Sore">Sore</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label for="searchTerm">Cari Nama / No. Kamar</label>
-                <input type="text" id="searchTerm" placeholder="Ketik di sini...">
+        <div class="controls-section">
+            <h2>Filter Pencarian</h2>
+            <div class="grid-layout">
+                <div class="control-group"><label for="startDate">Dari Tanggal</label><input type="date" id="startDate"></div>
+                <div class="control-group"><label for="endDate">Sampai Tanggal</label><input type="date" id="endDate"></div>
+                <div class="control-group"><label for="groupSearch">Cari Grup</label><select id="groupSearch"><option value="">Semua Grup</option></select></div>
+                <div class="control-group"><label for="sessionSearch">Sesi</label><select id="sessionSearch"><option value="">Semua Sesi</option><option value="Pagi">Pagi</option><option value="Sore">Sore</option></select></div>
+                <div class="control-group"><label for="searchTerm">Cari Nama / No. Kamar</label><input type="text" id="searchTerm" placeholder="Ketik di sini..."></div>
             </div>
         </div>
         
@@ -99,10 +85,7 @@
     <!-- Modal untuk menampilkan anggota -->
     <div class="modal-overlay" id="memberModal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="modalGroupName"></h2>
-                <button class="close-button" id="closeModalButton">&times;</button>
-            </div>
+            <div class="modal-header"><h2 class="modal-title" id="modalGroupName"></h2><button class="close-button" id="closeModalButton">&times;</button></div>
             <ul class="member-list" id="modalMemberList"></ul>
             <a href="#" id="modalGroupLink" class="whatsapp-button" target="_blank" rel="noopener noreferrer">Grup WhatsApp</a>
         </div>
@@ -111,208 +94,275 @@
     <!-- ================= KODE JAVASCRIPT DIMULAI DI SINI ================= -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- DATA SPREADSHEET TERTANAM LANGSUNG (DISEDIAKAN OLEH AI) ---
-            const localSheetData = `Grup A,Grub B,Grup C,Grup D,Grup E,Grup F,Grup G,Grup H,Grup I,Grup J,Grup K,Grup L,Grup M,Grup N,Grup O
-Dito Aryanto 225,Gungun Gumilar 224,Windu Ardiyanto 221,Dhidan H. 222,Martin Maulana 222,Dany raharjo 223,Zainal M Arifin 226,Alex Sandra 226,Ahmad Khasani 225,Saleh Hudin 224,Dicky Wahyudi 224,M. Albar H 221,Hasan 226,Muhammad Ridlo 224,Avicena 224
-Fani Alfarizi 223,Aris Prayogi 224,Dhani Ramadhan 222,M.Syafrudin A. 222,Irsyadul Ibad 222,Indri Permadi 223,Alex Pujianto 223,Yusup Ramdhoni 225,Istamar Alkaf 221,Muhammad Nizar AF 223,Muhamad Rizki 226,Firmansyah 225,Edi Jumari 226,Bayu Ristanto 226,Apriyanto 227
-Indra Pranata 224,Farhan Saefulillah 221,Fikri Muzaki 224,M.Rizki Silpana 222,Faisal Abdillah 222,Kelvin Firmansyah 223,Agung Triyanto 225,Tio Adhi Setya 225,Wisnu Bimantoro 225,Yasin Nuralim 225,Fikri puji yudistio 225,Rizki Julianto 225,M. Maruf A 222,Todi Damayanto 227,Fajar Nurkholis 226
-Imam Kartiwa 221,Hedi Yusuf 221,Adi Mulhakim 226,Muhammad Fahri K 225,Restu Rivaldi 221,Rochmat 223,Salis Irawan 223,Abdul Latif R 226,Muhammad Husni T 223,Ajad Jumadi 225,Orlando Prayudha 223,Juprianti Anwar 225,Yudi Harsono 225,M. Hamdika Muntajir 227,Syafiq Zakaria 227
-M Nogi Ilham 224,Bagas Aldi N. 221,Arya Dwi P. 226,Qyoko Krisna A 222,M. Rozan Sidik 221,Alvin Triyana 225,M. Adit 223,Arya Danu S 223,Cornelius Felix R 223,Muhammad Agus T 223,Triyan Ardiansyah 221,M Novel Tohal A 225,Akmal Rezky 225,Robby Achwal M 227,Saripudin 225
-Ades Nur R 221,Aditya Bagus P 221,Sahrul Ihsan 226,Saipul Anwar M 222,Salman Alfarizi 222,Yana Suryana 222,Yustiso Ringga S 222,Maulana Khoirul K 225,Rafli 224,Ibrahim Syah K 224,M. Ihsan Al Alhaq 221,Goga Nirwa P 224,Pahmi Bahara P 225,M.Gunawan 221,Khoirul Anam 227
-Adin Aprianto 221,Arizal Bagus N 222,M Aris Rizaldi 222,Ade Riyan 227,Sohibin Abdullah 222,Yoga Prabowo 222,Rosadi 223,Yudha Gusmawan 226,M Syahrul 226,Budi 223,Farhan Apriansyah 224,M Rayhan Alfauzi 226,Bayu Nur Fajar 225,Imam Arief A 225,Maulana 225
-Andriyan Nur Syafii 223,Devano Roma K 224,Puji Kawitan J 222,Ade Rifan Maulana 227,Muhammad Adiyb L 221,Muhammad Akiyat 221,M. Rizki naufal al A 221,Ayung Damar S 224,Muhamad Ridho 224,Ridwan Firmansyah 224,Dede Supriyadi 224,Syaiful Rendy 224,A. Miftahul Huda 224,M Choerul Falah 225,M Shandy Ilham A 227
-Aagien M. F.P 227,Adam kurniawan 227,Arif Yudi Setyawan 227,Aril Ramadhan 227,Bagus Sajiwo 227,Aldi Riyadi 227,Andre Wahyu S 227,Andreas Jonathan 227,,,,,,`;
             
-            const whatsappLinks = { 'Grup A': 'https://chat.whatsapp.com/Lbch5nBMymO1N9LSGfssSX', 'Grub B': 'https://chat.whatsapp.com/DrqsAD4SJqXD9AHUxkqJx6', 'Grup C': 'https://chat.whatsapp.com/DIzIRfvL0UC9UAuMTwpdmo', 'Grup D': 'https://chat.whatsapp.com/Ee4PeEc2rMmDqzjxXlEa2u', 'Grup E': 'https://chat.whatsapp.com/LFCqAjBP01WEDF0stSlc5e', 'Grup F': 'https://chat.whatsapp.com/JNTD0iJgZIYGliPNpBlgHG', 'Grup G': 'https://chat.whatsapp.com/JwH6rNz94bWCgrIzLrdQ2D?mode=ac_t', 'Grup H': 'https://chat.whatsapp.com/GbAe6Ot3Jg89lSD9fiz8TH', 'Grup I': 'https://chat.whatsapp.com/Ln2qfWAgfpR6T2DunwNvFc', 'Grup J': 'https://chat.whatsapp.com/BrO4vbCnqBVJFRSWHwcuuZ', 'Grup K': 'https://chat.whatsapp.com/DwAJe79Jp0p4rhpQiJmVYY', 'Grup L': 'https://chat.whatsapp.com/KRMzu5GPivuFDuxJePBfDJ', 'Grup M': 'https://chat.whatsapp.com/CnJhJU0fuTw0MzGPCwdgtG', 'Grup N': 'https://chat.whatsapp.com/Hy9s1Yh6kJEC6Th0l2Ltcd', 'Grup O': 'https://chat.whatsapp.com/Fkt4MFsovng9VD2r3Ao1In' };
-            const anchorDate = new Date('2025-08-17T00:00:00');
-            const anchorGroupIndex = 1;
-            const groups = ['Grup A', 'Grub B', 'Grup C', 'Grup D', 'Grup E', 'Grup F', 'Grup G', 'Grup H', 'Grup I', 'Grup J', 'Grup K', 'Grup L', 'Grup M', 'Grup N', 'Grup O'];
+            // --- KONFIGURASI JADWAL ---
+            const memberSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTMipEziynZlvItkNJ1TDobydXdW7_UIIpH0nDtdgjbMtjtjtiFKjj2Upyo_m5cCYwErcApyXc8U0mr/pub?gid=186361258&single=true&output=csv';
+            const overrideSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTMipEziynZlvItkNJ1TDobydXdW7_UIIpH0nDtdgjbMtjtjtiFKjj2Upyo_m5cCYwErcApyXc8U0mr/pub?gid=0&single=true&output=csv';
+            const whatsappLinks = { 'Grup A': 'https://chat.whatsapp.com/Lbch5nBMymO1N9LSGfssSX', 'Grup B': 'https://chat.whatsapp.com/DrqsAD4SJqXD9AHUxkqJx6', 'Grup C': 'https://chat.whatsapp.com/DIzIRfvL0UC9UAuMTwpdmo', 'Grup D': 'https://chat.whatsapp.com/Ee4PeEc2rMmDqzjxXlEa2u', 'Grup E': 'https://chat.whatsapp.com/LFCqAjBP01WEDF0stSlc5e', 'Grup F': 'https://chat.whatsapp.com/JNTD0iJgZIYGliPNpBlgHG', 'Grup G': 'https://chat.whatsapp.com/JwH6rNz94bWCgrIzLrdQ2D?mode=ac_t', 'Grup H': 'https://chat.whatsapp.com/GbAe6Ot3Jg89lSD9fiz8TH', 'Grup I': 'https://chat.whatsapp.com/Ln2qfWAgfpR6T2DunwNvFc', 'Grup J': 'https://chat.whatsapp.com/BrO4vbCnqBVJFRSWHwcuuZ', 'Grup K': 'https://chat.whatsapp.com/DwAJe79Jp0p4rhpQiJmVYY', 'Grup L': 'https://chat.whatsapp.com/KRMzu5GPivuFDuxJePBfDJ', 'Grup M': 'https://chat.whatsapp.com/CnJhJU0fuTw0MzGPCwdgtG', 'Grup N': 'https://chat.whatsapp.com/Hy9s1Yh6kJEC6Th0l2Ltcd', 'Grup O': 'https://chat.whatsapp.com/Fkt4MFsovng9VD2r3Ao1In' };
+            const anchorDate = new Date('2025-09-09T00:00:00');
+            const anchorGroupIndex = 6; // Indeks 'Grup G' (0-based)
+            const groups = ['Grup A', 'Grup B', 'Grup C', 'Grup D', 'Grup E', 'Grup F', 'Grup G', 'Grup H', 'Grup I', 'Grup J', 'Grup K', 'Grup L', 'Grup M', 'Grup N', 'Grup O'];
             const daysOfWeek = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
             const nationalHolidays = {'2025-01-01': 'Tahun Baru', '2025-01-27': 'Isra Mikraj', '2025-01-29': 'Imlek', '2025-03-29': 'Nyepi', '2025-03-31': 'Idul Fitri', '2025-04-01': 'Idul Fitri', '2025-05-01': 'Hari Buruh', '2025-05-12': 'Waisak', '2025-05-29': 'Kenaikan Isa Almasih', '2025-06-01': 'Lahir Pancasila', '2025-06-07': 'Idul Adha', '2025-06-27': 'Tahun Baru Islam', '2025-08-17': 'Kemerdekaan RI', '2025-09-05': 'Maulid Nabi', '2025-12-25': 'Natal'};
             
-            const startDateInput = document.getElementById('startDate'), endDateInput = document.getElementById('endDate'), groupSearchInput = document.getElementById('groupSearch'), sessionSearchInput = document.getElementById('sessionSearch'), searchTermInput = document.getElementById('searchTerm'), resultsContainer = document.getElementById('results'), statusElement = document.getElementById('status');
-            const memberModal = document.getElementById('memberModal'), modalGroupName = document.getElementById('modalGroupName'), modalMemberList = document.getElementById('modalMemberList'), closeModalButton = document.getElementById('closeModalButton'), modalGroupLink = document.getElementById('modalGroupLink');
+            const ui = {
+                startDate: document.getElementById('startDate'), endDate: document.getElementById('endDate'),
+                groupSearch: document.getElementById('groupSearch'), sessionSearch: document.getElementById('sessionSearch'),
+                searchTerm: document.getElementById('searchTerm'), results: document.getElementById('results'),
+                status: document.getElementById('status'), memberModal: document.getElementById('memberModal'),
+                modalGroupName: document.getElementById('modalGroupName'), modalMemberList: document.getElementById('modalMemberList'),
+                closeModalButton: document.getElementById('closeModalButton'), modalGroupLink: document.getElementById('modalGroupLink')
+            };
             
-            let memberData = [], fullSchedule = [];
+            let memberData = [], fullSchedule = [], scheduleOverrides = {};
 
-            function loadMemberData() {
+            const toLocalDateString = d => {
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            };
+
+            async function loadMemberData() {
                 try {
-                    const rows = localSheetData.trim().split('\n');
-                    const headers = rows[0].split(',').map(h => h.replace(/"/g, '').trim());
+                    const urlWithCacheBuster = `${memberSheetURL}&_=${new Date().getTime()}`;
+                    const response = await fetch(urlWithCacheBuster);
+                    if (!response.ok) throw new Error('Gagal mengambil data anggota dari Google Sheet.');
+                    const csvText = await response.text();
+                    
+                    const rows = csvText.trim().replace(/\r/g, '').split('\n');
+                    const headers = rows[0].split(',').map(h => h.trim().replace(/"/g, ''));
                     const dataByGroup = {};
-                    headers.forEach(h => { if(h) dataByGroup[h] = []; });
-                    rows.slice(1).forEach(rowText => {
-                        const values = rowText.split(',').map(v => v.replace(/"/g, '').trim());
-                        values.forEach((memberInfo, index) => {
-                            const headerName = headers[index];
-                            if (memberInfo && headerName) {
+                    headers.forEach(h => { if (h) dataByGroup[h] = []; });
+
+                    for (let rowIndex = 1; rowIndex < rows.length; rowIndex++) {
+                        const row = rows[rowIndex];
+                        const values = row.split(',').map(v => v.trim().replace(/"/g, ''));
+                        values.forEach((memberInfo, colIndex) => {
+                            const groupName = headers[colIndex];
+                            if (memberInfo && groupName) {
                                 const match = memberInfo.match(/(.+?)\s*(\d{3})$/);
-                                if (match) dataByGroup[headerName].push({ name: match[1].trim(), room: match[2] });
-                                else if (memberInfo) dataByGroup[headerName].push({ name: memberInfo, room: null });
+                                dataByGroup[groupName].push(match ? { name: match[1].trim(), room: match[2] } : { name: memberInfo, room: null });
                             }
                         });
+                    }
+                    memberData = Object.keys(dataByGroup).map(group => ({ group, members: dataByGroup[group] }));
+                } catch (error) { 
+                    ui.status.textContent = "❌ Gagal memuat data anggota."; 
+                    console.error("Error loading member data:", error); 
+                }
+            }
+
+            async function loadOverridesFromSheet() {
+                try {
+                    const urlWithCacheBuster = `${overrideSheetURL}&_=${new Date().getTime()}`;
+                    const response = await fetch(urlWithCacheBuster);
+                    if (!response.ok) throw new Error(`Gagal mengambil data dari Google Sheet: ${response.statusText}`);
+                    const csvText = await response.text();
+                    
+                    const rows = csvText.trim().replace(/\r/g, '').split('\n');
+                    if (rows.length < 2) return;
+
+                    const headers = rows[0].split(',').map(h => h.trim().toLowerCase().replace(/"/g, ''));
+                    const dateIndex = headers.indexOf('tanggal');
+                    const pagiIndex = headers.indexOf('hanya piket pagi');
+                    const soreIndex = headers.indexOf('hanya piket sore');
+                    const liburIndex = headers.indexOf('tidak ada piket');
+
+                    if (dateIndex === -1) throw new Error("Kolom 'Tanggal' tidak ditemukan.");
+
+                    const newOverrides = {};
+                    rows.slice(1).forEach(row => {
+                        const values = row.split(',');
+                        const dateStr = (values[dateIndex] || '').trim().replace(/"/g, '');
+                        if (!dateStr) return;
+                        
+                        const parts = dateStr.split('/');
+                        if (parts.length !== 3) return;
+                        const yyyyMMdd = `${parts[2]}-${String(parts[1]).padStart(2, '0')}-${String(parts[0]).padStart(2, '0')}`;
+                        
+                        const isHanyaPagi = pagiIndex !== -1 && (values[pagiIndex] || '').trim().toLowerCase() === 'y';
+                        const isHanyaSore = soreIndex !== -1 && (values[soreIndex] || '').trim().toLowerCase() === 'y';
+                        const isLibur = liburIndex !== -1 && (values[liburIndex] || '').trim().toLowerCase() === 'y';
+
+                        if (isLibur) newOverrides[yyyyMMdd] = { type: 'LIBUR' };
+                        else if (isHanyaSore) newOverrides[yyyyMMdd] = { type: 'HANYA_SORE' };
+                        else if (isHanyaPagi) newOverrides[yyyyMMdd] = { type: 'HANYA_PAGI' };
                     });
-                    memberData = Object.keys(dataByGroup).map(groupName => ({ group: groupName, members: dataByGroup[groupName] }));
-                    if(memberData.length === 0) throw new Error("Data anggota kosong.");
+                    scheduleOverrides = newOverrides;
                 } catch (error) {
-                    statusElement.textContent = "❌ Gagal memuat data. Terjadi kesalahan pada data internal.";
-                    console.error("Kesalahan loadMemberData:", error);
+                    console.error("Error loading overrides from Google Sheet:", error);
+                    ui.status.innerHTML += `<br><span style="color: var(--accent-red);">⚠️ Gagal memuat data perubahan jadwal. ${error.message}</span>`;
                 }
             }
             
-            // Fungsi untuk membuat string YYYY-MM-DD tanpa masalah timezone
-            const toLocalDateString = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-
-            // Fungsi untuk menghitung jumlah shift antara dua tanggal
-            function getShiftOffset(startDate, endDate) {
-                let shifts = 0;
-                let currentDate = new Date(startDate);
-                while (currentDate < endDate) {
-                    const dayOfWeek = currentDate.getDay();
-                    const dateString = toLocalDateString(currentDate);
-                    const isHoliday = !!nationalHolidays[dateString];
-                    shifts += (dayOfWeek === 0 || dayOfWeek === 6 || isHoliday) ? 1 : 2;
-                    currentDate.setDate(currentDate.getDate() + 1);
-                }
-                return shifts;
-            }
-
             function generateFullSchedule(days) {
                 const schedule = [];
-                const today = new Date();
-                today.setHours(0,0,0,0);
-                
-                let shiftCounter = getShiftOffset(anchorDate, today);
+                let currentDate = new Date(anchorDate.getTime());
+                let currentGroupIndex = anchorGroupIndex;
 
                 for (let i = 0; i < days; i++) {
-                    const date = new Date(today);
-                    date.setDate(today.getDate() + i);
-                    
-                    const dayOfWeek = date.getDay();
-                    const dateString = toLocalDateString(date);
+                    const dateString = toLocalDateString(currentDate);
+                    const dayOfWeek = currentDate.getDay();
                     const isHoliday = !!nationalHolidays[dateString];
+                    const override = scheduleOverrides[dateString];
                     const sessions = [];
+                    const shouldAffectSchedule = currentDate >= anchorDate;
 
-                    if (dayOfWeek === 0 || dayOfWeek === 6 || isHoliday) {
-                        const groupIndex = (anchorGroupIndex + shiftCounter) % groups.length;
-                        sessions.push({ time: 'Sore', group: groups[groupIndex] });
-                        shiftCounter++;
+                    if (override && shouldAffectSchedule) {
+                        if (override.type === 'HANYA_PAGI') {
+                            sessions.push({ time: 'Pagi', group: groups[currentGroupIndex % groups.length] });
+                            currentGroupIndex++;
+                        } else if (override.type === 'HANYA_SORE') {
+                            sessions.push({ time: 'Sore', group: groups[currentGroupIndex % groups.length] });
+                            currentGroupIndex++;
+                        }
                     } else {
-                        const morningGroupIndex = (anchorGroupIndex + shiftCounter) % groups.length;
-                        sessions.push({ time: 'Pagi', group: groups[morningGroupIndex] });
-                        shiftCounter++;
-                        
-                        const afternoonGroupIndex = (anchorGroupIndex + shiftCounter) % groups.length;
-                        sessions.push({ time: 'Sore', group: groups[afternoonGroupIndex] });
-                        shiftCounter++;
+                        if (dayOfWeek === 0 || dayOfWeek === 6 || isHoliday) {
+                            sessions.push({ time: 'Sore', group: groups[currentGroupIndex % groups.length] });
+                            currentGroupIndex++;
+                        } else {
+                            sessions.push({ time: 'Pagi', group: groups[currentGroupIndex % groups.length] });
+                            currentGroupIndex++;
+                            sessions.push({ time: 'Sore', group: groups[currentGroupIndex % groups.length] });
+                            currentGroupIndex++;
+                        }
                     }
-                    schedule.push({ date: date, sessions: sessions, holiday: nationalHolidays[dateString] || null });
+                    schedule.push({ date: new Date(currentDate.getTime()), sessions, holiday: nationalHolidays[dateString] || null });
+                    currentDate.setDate(currentDate.getDate() + 1);
                 }
                 fullSchedule = schedule;
             }
 
             function displayResults(schedule, sessionFilter) {
-                resultsContainer.innerHTML = '';
-                let foundResults = false;
+                ui.results.innerHTML = '';
+                if (schedule.length === 0) {
+                    ui.status.textContent = "Tidak ada jadwal yang cocok dengan filter.";
+                    ui.status.style.display = 'block';
+                    return;
+                }
+                
+                ui.status.style.display = 'none';
+                let resultsFound = false;
                 schedule.forEach(item => {
                     const date = item.date;
-                    const dayName = daysOfWeek[date.getDay()];
                     const dateFormatted = `${date.getDate()} ${date.toLocaleString('id-ID', { month: 'long' })}`;
                     const holidayTag = item.holiday ? `<div class="holiday-tag">${item.holiday}</div>` : '';
-                    const filteredSessions = sessionFilter ? item.sessions.filter(s => s.time === sessionFilter) : item.sessions;
-                    if (filteredSessions.length > 0) {
-                        foundResults = true;
-                        const sessionsHTML = filteredSessions.map(s => `<div class="session-item"><div class="session-time">${s.time}</div><div class="session-group" data-groupname="${s.group}">${s.group}</div></div>`).join('');
-                        const card = `<div class="schedule-card"><div class="card-header"><div class="date-info"><div class="date">${dateFormatted}</div><div class="day">${dayName}, ${date.getFullYear()}</div></div>${holidayTag}</div><div class="card-session">${sessionsHTML}</div></div>`;
-                        resultsContainer.innerHTML += card;
+                    const dateString = toLocalDateString(date);
+                    const override = scheduleOverrides[dateString];
+                    let sessionsHTML = '';
+                    let cardShouldBeDisplayed = false;
+
+                    if (override && override.type === 'LIBUR' && !sessionFilter) {
+                        sessionsHTML = `<div class="session-item" style="justify-content:center;"><div style="color:var(--accent-red); font-weight:bold;">Tidak Ada Piket</div></div>`;
+                        cardShouldBeDisplayed = true;
+                    } else {
+                        const filteredSessions = sessionFilter ? item.sessions.filter(s => s.time === sessionFilter) : item.sessions;
+                        if (filteredSessions.length > 0) {
+                            sessionsHTML = filteredSessions.map(s => `<div class="session-item"><div class="session-time">${s.time}</div><div class="session-group" data-groupname="${s.group}">${s.group}</div></div>`).join('');
+                            cardShouldBeDisplayed = true;
+                        }
+                    }
+
+                    if (cardShouldBeDisplayed) {
+                         resultsFound = true;
+                         ui.results.innerHTML += `<div class="schedule-card"><div class="card-header"><div class="date-info"><div class="date">${dateFormatted}</div><div class="day">${daysOfWeek[date.getDay()]}, ${date.getFullYear()}</div></div>${holidayTag}</div><div class="card-session">${sessionsHTML}</div></div>`;
                     }
                 });
-                if (!foundResults) {
-                    statusElement.textContent = "Tidak ada jadwal yang ditemukan.";
-                    statusElement.style.display = 'block';
-                } else {
-                    statusElement.style.display = 'none';
-                }
+                 if(!resultsFound){
+                    ui.status.textContent = "Tidak ada jadwal yang cocok dengan filter.";
+                    ui.status.style.display = 'block';
+                 }
             }
 
             function applyFilters() {
-                const start = startDateInput.valueAsDate;
-                const end = endDateInput.valueAsDate;
-                const group = groupSearchInput.value;
-                const session = sessionSearchInput.value;
-                const term = searchTermInput.value.toLowerCase().trim();
-                let filtered = [...fullSchedule];
-                if (start) { start.setHours(0,0,0,0); filtered = filtered.filter(i => i.date >= start); }
-                if (end) { end.setHours(0,0,0,0); filtered = filtered.filter(i => i.date <= end); }
-                if (group) { filtered = filtered.filter(i => i.sessions.some(s => s.group === group)); }
-                if (term) {
-                    const matchingGroups = new Set();
-                    memberData.forEach(g => { if (g.members.some(m => m.name.toLowerCase().includes(term) || (m.room && m.room.includes(term)))) { matchingGroups.add(g.group); } });
-                    if (matchingGroups.size > 0) {
-                        filtered = filtered.filter(i => i.sessions.some(s => matchingGroups.has(s.group)));
-                    } else {
-                        filtered = [];
+                const startInput = ui.startDate.valueAsDate;
+                const endInput = ui.endDate.valueAsDate;
+
+                let filtered = fullSchedule.filter(item => {
+                    if (startInput) {
+                        const startDate = new Date(startInput.getFullYear(), startInput.getMonth(), startInput.getDate());
+                        if (item.date < startDate) return false;
                     }
+                    if (endInput) {
+                         const endDate = new Date(endInput.getFullYear(), endInput.getMonth(), endInput.getDate());
+                        if (item.date > endDate) return false;
+                    }
+                    return true;
+                });
+
+                const group = ui.groupSearch.value;
+                if (group) {
+                    filtered = filtered.filter(i => {
+                        const override = scheduleOverrides[toLocalDateString(i.date)];
+                        if (override && override.type === 'LIBUR') return false; 
+                        return i.sessions.some(s => s.group === group);
+                    });
                 }
-                displayResults(filtered, session);
+                
+                const term = ui.searchTerm.value.toLowerCase().trim();
+                if (term) {
+                    const matchingGroups = new Set(memberData.filter(g => g.members.some(m => m.name.toLowerCase().includes(term) || (m.room && m.room.includes(term)))).map(g => g.group));
+                    filtered = filtered.filter(i => {
+                        const override = scheduleOverrides[toLocalDateString(i.date)];
+                        if (override && override.type === 'LIBUR') return false;
+                        return i.sessions.some(s => matchingGroups.has(s.group));
+                    });
+                }
+                
+                displayResults(filtered, ui.sessionSearch.value);
             }
-
-            function populateGroupFilter() {
-                groups.forEach(g => { const option = document.createElement('option'); option.value = g; option.textContent = g; groupSearchInput.appendChild(option); });
-            }
-
+            
             function openMemberModal(groupName) {
                 const groupInfo = memberData.find(g => g.group === groupName);
                 if (!groupInfo) return;
-                modalGroupName.textContent = `Anggota ${groupName}`;
-                modalMemberList.innerHTML = '';
+                ui.modalGroupName.textContent = `Anggota ${groupName}`;
+                ui.modalMemberList.innerHTML = ''; // Kosongkan dulu
+
                 if (groupInfo.members.length > 0) {
-                    groupInfo.members.forEach(member => {
+                    groupInfo.members.forEach((member, index) => {
                         const li = document.createElement('li');
-                        li.innerHTML = `<span class="member-name">${member.name}</span><span class="member-room">${member.room || ''}</span>`;
-                        modalMemberList.appendChild(li);
-                    });
-                } else {
-                    modalMemberList.innerHTML = '<li>Tidak ada data anggota untuk grup ini.</li>';
-                }
-                const link = whatsappLinks[groupName];
-                if (link) {
-                    modalGroupLink.href = link;
-                    modalGroupLink.style.display = 'block';
-                } else {
-                    modalGroupLink.style.display = 'none';
-                }
-                memberModal.style.display = 'flex';
-            }
-
-            function closeMemberModal() {
-                memberModal.style.display = 'none';
-            }
-
-            function init() {
-                loadMemberData();
-                if (memberData.length > 0) {
-                    populateGroupFilter();
-                    generateFullSchedule(365);
-                    applyFilters();
-                    [startDateInput, endDateInput, groupSearchInput, sessionSearchInput, searchTermInput].forEach(el => {
-                        el.addEventListener('input', applyFilters);
-                    });
-                    resultsContainer.addEventListener('click', (event) => {
-                        if (event.target.classList.contains('session-group')) {
-                            openMemberModal(event.target.dataset.groupname);
+                        if (index === 0) {
+                            li.classList.add('member-leader'); // Tambahkan kelas untuk ketua
                         }
+                        li.innerHTML = `<span class="member-name">${member.name}</span><span class="member-room">${member.room || ''}</span>`;
+                        ui.modalMemberList.appendChild(li);
                     });
-                    closeModalButton.addEventListener('click', closeMemberModal);
-                    memberModal.addEventListener('click', (event) => {
-                        if (event.target === memberModal) closeMemberModal();
-                    });
+                } else {
+                    ui.modalMemberList.innerHTML = '<li>Tidak ada data anggota.</li>';
                 }
+                
+                ui.modalGroupLink.href = whatsappLinks[groupName] || '#';
+                ui.modalGroupLink.style.display = whatsappLinks[groupName] ? 'block' : 'none';
+                ui.memberModal.style.display = 'flex';
             }
+
+            async function init() {
+                ui.status.textContent = 'Memuat data anggota dari Google Sheet...';
+                await loadMemberData();
+                if (memberData.length === 0) return;
+
+                ui.status.textContent = 'Memuat data perubahan jadwal dari Google Sheet...';
+                await loadOverridesFromSheet();
+                
+                ui.status.textContent = 'Membuat jadwal...';
+                
+                groups.forEach(g => { const opt = document.createElement('option'); opt.value = g; opt.textContent = g; ui.groupSearch.appendChild(opt); });
+                
+                generateFullSchedule(365);
+                applyFilters();
+
+                [ui.startDate, ui.endDate, ui.groupSearch, ui.sessionSearch, ui.searchTerm].forEach(el => el.addEventListener('input', applyFilters));
+                ui.results.addEventListener('click', e => { if (e.target.classList.contains('session-group')) openMemberModal(e.target.dataset.groupname); });
+                ui.closeModalButton.addEventListener('click', () => ui.memberModal.style.display = 'none');
+                ui.memberModal.addEventListener('click', e => { if (e.target === ui.memberModal) ui.memberModal.style.display = 'none'; });
+            }
+            
             init();
         });
     </script>
     <!-- =============== KODE JAVASCRIPT SELESAI DI SINI =============== -->
 </body>
 </html>
+
 
