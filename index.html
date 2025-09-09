@@ -7,53 +7,161 @@
     
     <!-- ================== KODE CSS DIMULAI DI SINI ================== -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Orbitron:wght@500;700&display=swap');
-        :root {
-            --bg-color: #111827; --primary-text-color: #f3f4f6; --secondary-text-color: #9ca3af;
-            --neon-cyan: #22d3ee; --neon-cyan-shadow: rgba(34, 211, 238, 0.3); --card-bg: #1f2937;
-            --border-color: #374151; --input-bg: #374151; --accent-red: #f43f5e;
-            --whatsapp-green: #25D366; --admin-yellow: #f59e0b;
-        }
-        body { background-color: var(--bg-color); color: var(--primary-text-color); font-family: 'Roboto', sans-serif; margin: 0; padding: 1rem; }
-        .container { max-width: 1400px; margin: auto; }
-        .header h1 { font-family: 'Orbitron', sans-serif; text-align: center; font-size: 2.5rem; font-weight: 700; color: var(--neon-cyan); text-shadow: 0 0 5px var(--neon-cyan), 0 0 15px var(--neon-cyan), 0 0 30px var(--neon-cyan-shadow); margin-bottom: 2rem; }
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique:wght@300;400;700&display=swap');
         
-        .controls-section { background-color: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 2rem; }
-        .controls-section h2 { margin-top: 0; font-family: 'Orbitron', sans-serif; color: var(--neon-cyan); font-weight: 500; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; margin-bottom: 1rem; }
+        :root {
+            --bg-color: #1a202c;
+            --primary-text-color: #e2e8f0;
+            --secondary-text-color: #a0aec0;
+            --accent-color: #e53e3e; /* Aksen merah ala Jepang */
+            --card-bg: rgba(26, 32, 44, 0.6); /* Latar kartu transparan */
+            --border-color: rgba(255, 255, 255, 0.1);
+            --input-bg: rgba(45, 55, 72, 0.8);
+            --whatsapp-green: #25D366;
+            --leader-yellow: #f6e05e;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--primary-text-color);
+            font-family: 'Zen Kaku Gothic Antique', sans-serif;
+            margin: 0;
+            padding: 1rem;
+            /* Transisi untuk pergantian background */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            transition: background-image 1s ease-in-out;
+            position: relative;
+        }
+
+        /* Overlay gelap agar teks mudah dibaca di atas background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        .container { max-width: 1400px; margin: auto; }
+        
+        .header h1 {
+            font-family: 'Zen Kaku Gothic Antique', sans-serif;
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 2.5rem;
+            letter-spacing: 2px;
+        }
+        
+        .controls-section {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .controls-section h2 { 
+            margin-top: 0;
+            font-weight: 700;
+            color: var(--primary-text-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
         .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
         .control-group { display: flex; flex-direction: column; }
-        .control-group label { margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--secondary-text-color); font-weight: 300; }
-        .control-group input, .control-group select { background-color: var(--input-bg); color: var(--primary-text-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.75rem; font-size: 1rem; transition: all 0.2s ease-in-out; }
-        .control-group input:focus, .control-group select:focus { outline: none; border-color: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan-shadow); }
+        .control-group label { margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--secondary-text-color); }
+        .control-group input, .control-group select {
+            background-color: var(--input-bg);
+            color: var(--primary-text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
+            font-family: 'Zen Kaku Gothic Antique', sans-serif;
+        }
+        .control-group input:focus, .control-group select:focus { 
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.4);
+        }
         
         #results { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
-        .schedule-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; }
-        .schedule-card:hover { transform: translateY(-5px); box-shadow: 0 0 25px var(--neon-cyan-shadow); }
+        
+        .schedule-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .schedule-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+        }
+
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem; }
         .card-header .date-info .date { font-size: 1.5rem; font-weight: 700; color: var(--primary-text-color); }
         .card-header .date-info .day { font-size: 0.9rem; color: var(--secondary-text-color); }
-        .card-header .holiday-tag { background-color: var(--accent-red); color: #fff; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; align-self: center; }
+        .card-header .holiday-tag { background-color: var(--accent-color); color: #fff; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; align-self: center; }
         .card-session { display: flex; flex-direction: column; gap: 1rem; }
         .session-item { display: flex; align-items: center; }
-        .session-time { width: 60px; font-weight: 700; color: var(--neon-cyan); }
-        .session-group { flex-grow: 1; font-size: 1.1rem; cursor: pointer; transition: color 0.2s; }
-        .session-group:hover { color: var(--neon-cyan); }
+        .session-time { width: 60px; font-weight: 700; color: var(--primary-text-color); }
+        .session-group { flex-grow: 1; font-size: 1.1rem; cursor: pointer; transition: color 0.2s; font-weight: 400; }
+        .session-group:hover { color: var(--accent-color); }
         #status { text-align: center; font-size: 1.25rem; padding: 3rem; color: var(--secondary-text-color); }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 1rem; box-sizing: border-box;}
-        .modal-content { background-color: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 1rem; box-sizing: border-box; backdrop-filter: blur(5px); }
+        
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+        
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem; }
-        .modal-title { font-size: 1.5rem; color: var(--neon-cyan); font-family: 'Orbitron', sans-serif; }
-        .close-button { font-size: 2rem; color: var(--secondary-text-color); cursor: pointer; background: none; border: none; }
+        .modal-title { font-size: 1.5rem; color: var(--primary-text-color); font-weight: 700; }
+        .close-button { font-size: 2rem; color: var(--secondary-text-color); cursor: pointer; background: none; border: none; transition: color 0.2s; }
+        .close-button:hover { color: #fff; }
+
         .member-list { list-style: none; padding: 0; max-height: 300px; overflow-y: auto; margin-bottom: 1.5rem;}
-        .member-list li { padding: 0.75rem 0; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .member-list li { padding: 0.75rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 0.5rem;}
         .member-list li:last-child { border-bottom: none; }
+        
         /* Style untuk Ketua Grup */
         .member-list .member-leader .member-name {
-            color: var(--admin-yellow);
+            color: var(--leader-yellow);
             font-weight: 700;
         }
-        .whatsapp-button { display: block; background-color: var(--whatsapp-green); color: white; text-align: center; padding: 0.75rem; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background-color 0.2s; }
+        .whatsapp-button { display: block; background-color: var(--whatsapp-green); color: white; text-align: center; padding: 0.75rem; border-radius: 8px; text-decoration: none; font-weight: bold; transition: background-color 0.2s; }
+        .whatsapp-button:hover { background-color: #1EBE57; }
         
         @media (max-width: 768px) {
             body { padding: 0.5rem; } .header h1 { font-size: 1.8rem; }
@@ -65,7 +173,7 @@
 </head>
 <body>
     <div class="container">
-        <header class="header"><h1>Dashboard Jadwal Piket</h1></header>
+        <header class="header"><h1>Jadwal Piket Touban</h1></header>
 
         <div class="controls-section">
             <h2>Filter Pencarian</h2>
@@ -95,26 +203,49 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // --- KONFIGURASI JADWAL ---
+            // --- KONFIGURASI JADWAL & GAMBAR ---
             const memberSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTMipEziynZlvItkNJ1TDobydXdW7_UIIpH0nDtdgjbMtjtjtiFKjj2Upyo_m5cCYwErcApyXc8U0mr/pub?gid=186361258&single=true&output=csv';
             const overrideSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTMipEziynZlvItkNJ1TDobydXdW7_UIIpH0nDtdgjbMtjtjtiFKjj2Upyo_m5cCYwErcApyXc8U0mr/pub?gid=0&single=true&output=csv';
             const whatsappLinks = { 'Grup A': 'https://chat.whatsapp.com/Lbch5nBMymO1N9LSGfssSX', 'Grup B': 'https://chat.whatsapp.com/DrqsAD4SJqXD9AHUxkqJx6', 'Grup C': 'https://chat.whatsapp.com/DIzIRfvL0UC9UAuMTwpdmo', 'Grup D': 'https://chat.whatsapp.com/Ee4PeEc2rMmDqzjxXlEa2u', 'Grup E': 'https://chat.whatsapp.com/LFCqAjBP01WEDF0stSlc5e', 'Grup F': 'https://chat.whatsapp.com/JNTD0iJgZIYGliPNpBlgHG', 'Grup G': 'https://chat.whatsapp.com/JwH6rNz94bWCgrIzLrdQ2D?mode=ac_t', 'Grup H': 'https://chat.whatsapp.com/GbAe6Ot3Jg89lSD9fiz8TH', 'Grup I': 'https://chat.whatsapp.com/Ln2qfWAgfpR6T2DunwNvFc', 'Grup J': 'https://chat.whatsapp.com/BrO4vbCnqBVJFRSWHwcuuZ', 'Grup K': 'https://chat.whatsapp.com/DwAJe79Jp0p4rhpQiJmVYY', 'Grup L': 'https://chat.whatsapp.com/KRMzu5GPivuFDuxJePBfDJ', 'Grup M': 'https://chat.whatsapp.com/CnJhJU0fuTw0MzGPCwdgtG', 'Grup N': 'https://chat.whatsapp.com/Hy9s1Yh6kJEC6Th0l2Ltcd', 'Grup O': 'https://chat.whatsapp.com/Fkt4MFsovng9VD2r3Ao1In' };
             const anchorDate = new Date('2025-09-09T00:00:00');
-            const anchorGroupIndex = 6; // Indeks 'Grup G' (0-based)
+            const anchorGroupIndex = 6;
             const groups = ['Grup A', 'Grup B', 'Grup C', 'Grup D', 'Grup E', 'Grup F', 'Grup G', 'Grup H', 'Grup I', 'Grup J', 'Grup K', 'Grup L', 'Grup M', 'Grup N', 'Grup O'];
             const daysOfWeek = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
             const nationalHolidays = {'2025-01-01': 'Tahun Baru', '2025-01-27': 'Isra Mikraj', '2025-01-29': 'Imlek', '2025-03-29': 'Nyepi', '2025-03-31': 'Idul Fitri', '2025-04-01': 'Idul Fitri', '2025-05-01': 'Hari Buruh', '2025-05-12': 'Waisak', '2025-05-29': 'Kenaikan Isa Almasih', '2025-06-01': 'Lahir Pancasila', '2025-06-07': 'Idul Adha', '2025-06-27': 'Tahun Baru Islam', '2025-08-17': 'Kemerdekaan RI', '2025-09-05': 'Maulid Nabi', '2025-12-25': 'Natal'};
             
+            // --- Daftar Nama File Gambar ---
+            const bodyImages = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg'];
+            const filterImages = ['7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg'];
+            const modalImages = ['13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg'];
+
             const ui = {
+                body: document.body,
+                controlsSection: document.querySelector('.controls-section'),
                 startDate: document.getElementById('startDate'), endDate: document.getElementById('endDate'),
                 groupSearch: document.getElementById('groupSearch'), sessionSearch: document.getElementById('sessionSearch'),
                 searchTerm: document.getElementById('searchTerm'), results: document.getElementById('results'),
                 status: document.getElementById('status'), memberModal: document.getElementById('memberModal'),
+                modalContent: document.querySelector('.modal-content'),
                 modalGroupName: document.getElementById('modalGroupName'), modalMemberList: document.getElementById('modalMemberList'),
                 closeModalButton: document.getElementById('closeModalButton'), modalGroupLink: document.getElementById('modalGroupLink')
             };
             
-            let memberData = [], fullSchedule = [], scheduleOverrides = {};
+            let memberData = [], fullSchedule = [], scheduleOverrides = {}, currentBodyImageIndex = 0;
+
+            // --- FUNGSI BACKGROUND DINAMIS ---
+            function changeBodyBackground() {
+                currentBodyImageIndex = (currentBodyImageIndex + 1) % bodyImages.length;
+                ui.body.style.backgroundImage = `url('${bodyImages[currentBodyImageIndex]}')`;
+            }
+            function setRandomFilterBackground() {
+                const randomIndex = Math.floor(Math.random() * filterImages.length);
+                ui.controlsSection.style.backgroundImage = `url('${filterImages[randomIndex]}')`;
+            }
+            function setRandomModalBackground() {
+                const randomIndex = Math.floor(Math.random() * modalImages.length);
+                ui.modalContent.style.backgroundImage = `url('${modalImages[randomIndex]}')`;
+            }
+
 
             const toLocalDateString = d => {
                 const year = d.getFullYear();
@@ -129,12 +260,10 @@
                     const response = await fetch(urlWithCacheBuster);
                     if (!response.ok) throw new Error('Gagal mengambil data anggota dari Google Sheet.');
                     const csvText = await response.text();
-                    
                     const rows = csvText.trim().replace(/\r/g, '').split('\n');
                     const headers = rows[0].split(',').map(h => h.trim().replace(/"/g, ''));
                     const dataByGroup = {};
                     headers.forEach(h => { if (h) dataByGroup[h] = []; });
-
                     for (let rowIndex = 1; rowIndex < rows.length; rowIndex++) {
                         const row = rows[rowIndex];
                         const values = row.split(',').map(v => v.trim().replace(/"/g, ''));
@@ -159,32 +288,25 @@
                     const response = await fetch(urlWithCacheBuster);
                     if (!response.ok) throw new Error(`Gagal mengambil data dari Google Sheet: ${response.statusText}`);
                     const csvText = await response.text();
-                    
                     const rows = csvText.trim().replace(/\r/g, '').split('\n');
                     if (rows.length < 2) return;
-
                     const headers = rows[0].split(',').map(h => h.trim().toLowerCase().replace(/"/g, ''));
                     const dateIndex = headers.indexOf('tanggal');
                     const pagiIndex = headers.indexOf('hanya piket pagi');
                     const soreIndex = headers.indexOf('hanya piket sore');
                     const liburIndex = headers.indexOf('tidak ada piket');
-
                     if (dateIndex === -1) throw new Error("Kolom 'Tanggal' tidak ditemukan.");
-
                     const newOverrides = {};
                     rows.slice(1).forEach(row => {
                         const values = row.split(',');
                         const dateStr = (values[dateIndex] || '').trim().replace(/"/g, '');
                         if (!dateStr) return;
-                        
                         const parts = dateStr.split('/');
                         if (parts.length !== 3) return;
                         const yyyyMMdd = `${parts[2]}-${String(parts[1]).padStart(2, '0')}-${String(parts[0]).padStart(2, '0')}`;
-                        
                         const isHanyaPagi = pagiIndex !== -1 && (values[pagiIndex] || '').trim().toLowerCase() === 'y';
                         const isHanyaSore = soreIndex !== -1 && (values[soreIndex] || '').trim().toLowerCase() === 'y';
                         const isLibur = liburIndex !== -1 && (values[liburIndex] || '').trim().toLowerCase() === 'y';
-
                         if (isLibur) newOverrides[yyyyMMdd] = { type: 'LIBUR' };
                         else if (isHanyaSore) newOverrides[yyyyMMdd] = { type: 'HANYA_SORE' };
                         else if (isHanyaPagi) newOverrides[yyyyMMdd] = { type: 'HANYA_PAGI' };
@@ -200,7 +322,6 @@
                 const schedule = [];
                 let currentDate = new Date(anchorDate.getTime());
                 let currentGroupIndex = anchorGroupIndex;
-
                 for (let i = 0; i < days; i++) {
                     const dateString = toLocalDateString(currentDate);
                     const dayOfWeek = currentDate.getDay();
@@ -208,7 +329,6 @@
                     const override = scheduleOverrides[dateString];
                     const sessions = [];
                     const shouldAffectSchedule = currentDate >= anchorDate;
-
                     if (override && shouldAffectSchedule) {
                         if (override.type === 'HANYA_PAGI') {
                             sessions.push({ time: 'Pagi', group: groups[currentGroupIndex % groups.length] });
@@ -241,7 +361,6 @@
                     ui.status.style.display = 'block';
                     return;
                 }
-                
                 ui.status.style.display = 'none';
                 let resultsFound = false;
                 schedule.forEach(item => {
@@ -252,9 +371,8 @@
                     const override = scheduleOverrides[dateString];
                     let sessionsHTML = '';
                     let cardShouldBeDisplayed = false;
-
                     if (override && override.type === 'LIBUR' && !sessionFilter) {
-                        sessionsHTML = `<div class="session-item" style="justify-content:center;"><div style="color:var(--accent-red); font-weight:bold;">Tidak Ada Piket</div></div>`;
+                        sessionsHTML = `<div class="session-item" style="justify-content:center;"><div style="color:var(--accent-color); font-weight:bold;">Tidak Ada Piket</div></div>`;
                         cardShouldBeDisplayed = true;
                     } else {
                         const filteredSessions = sessionFilter ? item.sessions.filter(s => s.time === sessionFilter) : item.sessions;
@@ -263,7 +381,6 @@
                             cardShouldBeDisplayed = true;
                         }
                     }
-
                     if (cardShouldBeDisplayed) {
                          resultsFound = true;
                          ui.results.innerHTML += `<div class="schedule-card"><div class="card-header"><div class="date-info"><div class="date">${dateFormatted}</div><div class="day">${daysOfWeek[date.getDay()]}, ${date.getFullYear()}</div></div>${holidayTag}</div><div class="card-session">${sessionsHTML}</div></div>`;
@@ -278,7 +395,6 @@
             function applyFilters() {
                 const startInput = ui.startDate.valueAsDate;
                 const endInput = ui.endDate.valueAsDate;
-
                 let filtered = fullSchedule.filter(item => {
                     if (startInput) {
                         const startDate = new Date(startInput.getFullYear(), startInput.getMonth(), startInput.getDate());
@@ -290,7 +406,6 @@
                     }
                     return true;
                 });
-
                 const group = ui.groupSearch.value;
                 if (group) {
                     filtered = filtered.filter(i => {
@@ -299,7 +414,6 @@
                         return i.sessions.some(s => s.group === group);
                     });
                 }
-                
                 const term = ui.searchTerm.value.toLowerCase().trim();
                 if (term) {
                     const matchingGroups = new Set(memberData.filter(g => g.members.some(m => m.name.toLowerCase().includes(term) || (m.room && m.room.includes(term)))).map(g => g.group));
@@ -309,46 +423,45 @@
                         return i.sessions.some(s => matchingGroups.has(s.group));
                     });
                 }
-                
                 displayResults(filtered, ui.sessionSearch.value);
             }
             
             function openMemberModal(groupName) {
+                setRandomModalBackground(); // Atur background acak saat modal dibuka
                 const groupInfo = memberData.find(g => g.group === groupName);
                 if (!groupInfo) return;
                 ui.modalGroupName.textContent = `Anggota ${groupName}`;
-                ui.modalMemberList.innerHTML = ''; // Kosongkan dulu
-
+                ui.modalMemberList.innerHTML = '';
                 if (groupInfo.members.length > 0) {
                     groupInfo.members.forEach((member, index) => {
                         const li = document.createElement('li');
-                        if (index === 0) {
-                            li.classList.add('member-leader'); // Tambahkan kelas untuk ketua
-                        }
+                        if (index === 0) li.classList.add('member-leader');
                         li.innerHTML = `<span class="member-name">${member.name}</span><span class="member-room">${member.room || ''}</span>`;
                         ui.modalMemberList.appendChild(li);
                     });
                 } else {
                     ui.modalMemberList.innerHTML = '<li>Tidak ada data anggota.</li>';
                 }
-                
                 ui.modalGroupLink.href = whatsappLinks[groupName] || '#';
                 ui.modalGroupLink.style.display = whatsappLinks[groupName] ? 'block' : 'none';
                 ui.memberModal.style.display = 'flex';
             }
 
             async function init() {
+                // Inisialisasi background
+                ui.body.style.backgroundImage = `url('${bodyImages[0]}')`;
+                setInterval(changeBodyBackground, 10000);
+                setRandomFilterBackground();
+
                 ui.status.textContent = 'Memuat data anggota dari Google Sheet...';
                 await loadMemberData();
                 if (memberData.length === 0) return;
-
+                
                 ui.status.textContent = 'Memuat data perubahan jadwal dari Google Sheet...';
                 await loadOverridesFromSheet();
                 
                 ui.status.textContent = 'Membuat jadwal...';
-                
                 groups.forEach(g => { const opt = document.createElement('option'); opt.value = g; opt.textContent = g; ui.groupSearch.appendChild(opt); });
-                
                 generateFullSchedule(365);
                 applyFilters();
 
@@ -364,5 +477,4 @@
     <!-- =============== KODE JAVASCRIPT SELESAI DI SINI =============== -->
 </body>
 </html>
-
 
