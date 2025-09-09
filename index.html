@@ -77,14 +77,25 @@
             margin-top: 0;
             font-weight: 700;
             color: var(--primary-text-color);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1rem;
             margin-bottom: 1.5rem;
+            display: inline-block;
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
         }
         
         .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
         .control-group { display: flex; flex-direction: column; }
-        .control-group label { margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--secondary-text-color); }
+        .control-group label {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--secondary-text-color);
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            display: inline-block;
+            width: fit-content;
+        }
         .control-group input, .control-group select {
             background-color: var(--input-bg);
             color: var(--primary-text-color);
@@ -147,12 +158,19 @@
         }
         
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem; }
-        .modal-title { font-size: 1.5rem; color: var(--primary-text-color); font-weight: 700; }
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--primary-text-color);
+            font-weight: 700;
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
         .close-button { font-size: 2rem; color: var(--secondary-text-color); cursor: pointer; background: none; border: none; transition: color 0.2s; }
         .close-button:hover { color: #fff; }
 
         .member-list { list-style: none; padding: 0; max-height: 300px; overflow-y: auto; margin-bottom: 1.5rem;}
-        .member-list li { padding: 0.75rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 0.5rem;}
+        .member-list li { padding: 0.75rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.75); border-radius: 8px; margin-bottom: 0.5rem;}
         .member-list li:last-child { border-bottom: none; }
         
         /* Style untuk Ketua Grup */
@@ -477,4 +495,5 @@
     <!-- =============== KODE JAVASCRIPT SELESAI DI SINI =============== -->
 </body>
 </html>
+
 
