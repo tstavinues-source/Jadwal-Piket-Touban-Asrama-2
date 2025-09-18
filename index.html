@@ -17,7 +17,7 @@
             --primary-text-color: #e2e8f0;
             --secondary-text-color: #a0aec0;
             --accent-color: #e53e3e; /* Aksen merah ala Jepang */
-            --card-bg: rgba(26, 32, 44, 0.75); /* Latar kartu transparan */
+            --card-bg: rgba(26, 32, 44, 0.85); /* Latar kartu transparan dibuat lebih pekat */
             --border-color: rgba(255, 255, 255, 0.1);
             --input-bg: rgba(45, 55, 72, 0.8);
             --whatsapp-green: #25D366;
@@ -38,7 +38,6 @@
         body {
             background-color: var(--bg-color);
             color: var(--primary-text-color);
-            /* Menggunakan font baru */
             font-family: 'M PLUS Rounded 1c', sans-serif;
             margin: 0;
             padding: 1rem;
@@ -47,32 +46,15 @@
             background-attachment: fixed;
             transition: background-image 1s ease-in-out;
             position: relative;
-            overflow-x: hidden; /* Mencegah scroll horizontal dari pseudo-elements */
+            overflow-x: hidden;
         }
         
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.5);
             z-index: -1;
-        }
-
-        /* Dekorasi bentuk ala Jepang */
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            right: -100px;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(229, 62, 62, 0.1), transparent 70%);
-            border-radius: 50%;
-            z-index: -1;
-            pointer-events: none;
         }
 
         .container { 
@@ -117,193 +99,39 @@
             transition: border-color 0.5s linear, box-shadow 0.5s linear;
         }
         
-        .todays-picket-card .picket-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: #fff;
-        }
+        .todays-picket-card .picket-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff; }
+        .todays-picket-card .picket-day-kanji { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.25rem; transition: color 0.3s ease-in-out; }
+        .todays-picket-card .picket-day-kanji, .kanji-day { text-shadow: 0 0 8px currentColor; }
+        .todays-picket-card .picket-date { font-size: 1.1rem; color: var(--secondary-text-color); margin-bottom: 1.5rem; }
+        .todays-picket-card .picket-group-name { font-size: 3.5rem; font-weight: 900; margin-bottom: 1rem; text-transform: uppercase; color: #fff; text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--neon-glow-color); transition: text-shadow 0.5s ease-in-out; }
+        .todays-picket-card .picket-leader { font-size: 1.2rem; font-weight: bold; color: var(--leader-yellow); margin-bottom: 1rem; }
+        .todays-picket-card .picket-members-title { text-align: left; max-width: 300px; margin: 0 auto 0.5rem auto; font-weight: bold; }
+        .todays-picket-card .picket-members { list-style-position: inside; padding: 0; margin: 0 auto 1.5rem auto; max-width: 300px; text-align: left; }
+        .todays-picket-card .picket-members li { padding: 0.25rem 0; color: var(--primary-text-color); }
 
-        /* Gaya baru untuk menonjolkan hari Kanji */
-        .todays-picket-card .picket-day-kanji {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-            transition: color 0.3s ease-in-out;
-        }
-        
-        .todays-picket-card .picket-day-kanji, .kanji-day {
-            text-shadow: 0 0 8px currentColor;
-        }
+        .button-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-top: 1.5rem; }
+        .report-button, .whatsapp-button { display: inline-block; color: white; text-align: center; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; transition: background-color 0.2s, transform 0.2s; border: none; cursor: pointer; width: 220px; }
+        .report-button { background-color: #4A90E2; }
+        .whatsapp-button { background-color: var(--whatsapp-green); }
+        .report-button:hover { background-color: #357ABD; transform: scale(1.05); }
+        .whatsapp-button:hover { background-color: #1EBE57; transform: scale(1.05); }
 
-
-        .todays-picket-card .picket-date {
-            font-size: 1.1rem;
-            color: var(--secondary-text-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .todays-picket-card .picket-group-name {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            color: #fff;
-            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--neon-glow-color);
-            transition: text-shadow 0.5s ease-in-out;
-        }
-
-        .todays-picket-card .picket-leader {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--leader-yellow);
-            margin-bottom: 1rem;
-        }
-
-        .todays-picket-card .picket-members-title {
-            text-align: left;
-            max-width: 300px;
-            margin: 0 auto 0.5rem auto;
-            font-weight: bold;
-        }
-        
-        .todays-picket-card .picket-members {
-            list-style-position: inside;
-            padding: 0;
-            margin: 0 auto 1.5rem auto;
-            max-width: 300px;
-            text-align: left;
-        }
-        
-        .todays-picket-card .picket-members li {
-            padding: 0.25rem 0;
-            color: var(--primary-text-color);
-        }
-
-        .button-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .report-button, .whatsapp-button {
-            display: inline-block;
-            color: white;
-            text-align: center;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.2s, transform 0.2s;
-            border: none;
-            cursor: pointer;
-            width: 220px;
-        }
-        .report-button {
-             background-color: #4A90E2; /* Biru */
-        }
-         .whatsapp-button {
-            background-color: var(--whatsapp-green);
-        }
-        .report-button:hover {
-            background-color: #357ABD;
-            transform: scale(1.05);
-        }
-        .whatsapp-button:hover {
-            background-color: #1EBE57;
-            transform: scale(1.05);
-        }
-
-        .controls-section {
-            background-color: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 2rem;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-
-        .controls-section h2 { 
-            margin-top: 0;
-            font-weight: 700;
-            color: var(--brand-color);
-            margin-bottom: 1.5rem;
-            display: inline-block;
-            background-color: rgba(0, 0, 0, 0.75);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-        }
+        .controls-section { background-color: var(--card-bg); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 2rem; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); background-size: cover; background-position: center; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
+        .controls-section h2 { margin-top: 0; font-weight: 700; color: var(--brand-color); margin-bottom: 1.5rem; display: inline-block; background-color: rgba(0, 0, 0, 0.75); padding: 0.5rem 1rem; border-radius: 8px; }
         
         .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
         .control-group { display: flex; flex-direction: column; }
-        .control-group label {
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--secondary-text-color);
-            background-color: rgba(0, 0, 0, 0.75);
-            padding: 0.25rem 0.5rem;
-            border-radius: 6px;
-            display: inline-block;
-            width: fit-content;
-        }
-        .control-group input, .control-group select {
-            background-color: var(--input-bg);
-            color: var(--primary-text-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 0.75rem;
-            font-size: 1rem;
-            transition: all 0.2s ease-in-out;
-            font-family: 'M PLUS Rounded 1c', sans-serif;
-        }
-        .control-group input:focus, .control-group select:focus { 
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.4);
-        }
+        .control-group label { margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--secondary-text-color); background-color: rgba(0, 0, 0, 0.75); padding: 0.25rem 0.5rem; border-radius: 6px; display: inline-block; width: fit-content; }
+        .control-group input, .control-group select { background-color: var(--input-bg); color: var(--primary-text-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.75rem; font-size: 1rem; transition: all 0.2s ease-in-out; font-family: 'M PLUS Rounded 1c', sans-serif; }
+        .control-group input:focus, .control-group select:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.4); }
 
-        #searchButton {
-            grid-column: 1 / -1; /* Tombol search akan memanjang di semua kolom grid */
-            margin-top: 1rem;
-            padding: 0.75rem;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #fff;
-            background: linear-gradient(90deg, var(--brand-color), #e52e71);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        #searchButton:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(229, 46, 113, 0.4);
-        }
+        #searchButton { grid-column: 1 / -1; margin-top: 1rem; padding: 0.75rem; font-size: 1.1rem; font-weight: 700; color: #fff; background: linear-gradient(90deg, var(--brand-color), #e52e71); border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+        #searchButton:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(229, 46, 113, 0.4); }
         
         #results { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
         
-        .schedule-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-        .schedule-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
-        }
+        .schedule-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
+        .schedule-card:hover { transform: translateY(-8px); box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5); }
 
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem; }
         .card-header .date-info .date { font-size: 1.5rem; font-weight: 700; color: var(--primary-text-color); }
@@ -316,41 +144,22 @@
         .session-group:hover { color: var(--accent-color); }
         #status { text-align: center; font-size: 1.25rem; padding: 3rem; color: var(--secondary-text-color); }
         
-        /* Kelas Warna Hari */
-        .day-sun { color: var(--day-sun-color); }
-        .day-mon { color: var(--day-mon-color); }
-        .day-tue { color: var(--day-tue-color); }
-        .day-wed { color: var(--day-wed-color); }
-        .day-thu { color: var(--day-thu-color); }
-        .day-fri { color: var(--day-fri-color); }
-        .day-sat { color: var(--day-sat-color); }
-
+        .day-sun { color: var(--day-sun-color); } .day-mon { color: var(--day-mon-color); } .day-tue { color: var(--day-tue-color); } .day-wed { color: var(--day-wed-color); } .day-thu { color: var(--day-thu-color); } .day-fri { color: var(--day-fri-color); } .day-sat { color: var(--day-sat-color); }
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 1rem; box-sizing: border-box; backdrop-filter: blur(5px); }
+        .modal-content { background-color: var(--card-bg); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--border-color); width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; background-size: cover; background-position: center; }
         
-        .modal-content {
-            background-color: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            width: 100%;
-            max-width: 500px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            position: relative;
-            background-size: cover;
-            background-position: center;
-        }
-
-        #reportModal .modal-content {
-            max-width: 700px; /* Lebih lebar untuk form */
-            height: 90vh; /* Lebih tinggi untuk form */
-            display: flex;
+        /* CSS Fleksibel untuk Modal Laporan */
+        #reportModal .modal-content { 
+            max-width: 700px; 
+            width: 90%;
+            height: 90vh; 
+            display: flex; 
             flex-direction: column;
         }
-
-        .modal-body {
-            flex-grow: 1;
-            overflow-y: hidden;
+        .modal-body { 
+            flex-grow: 1; 
+            overflow: hidden; /* Mencegah scroll ganda */
         }
         .modal-body iframe {
             width: 100%;
@@ -359,86 +168,32 @@
         }
         
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem; }
-        .modal-title {
-            font-size: 1.5rem;
-            color: var(--primary-text-color);
-            font-weight: 700;
-            background-color: rgba(0, 0, 0, 0.75);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-        }
+        .modal-title { font-size: 1.5rem; color: var(--primary-text-color); font-weight: 700; background-color: rgba(0, 0, 0, 0.75); padding: 0.5rem 1rem; border-radius: 8px; }
         .close-button { font-size: 2rem; color: var(--secondary-text-color); cursor: pointer; background: none; border: none; transition: color 0.2s; }
         .close-button:hover { color: #fff; }
 
         .member-list { list-style: none; padding: 0; max-height: 300px; overflow-y: auto; margin-bottom: 1.5rem;}
         .member-list li { padding: 0.75rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.75); border-radius: 8px; margin-bottom: 0.5rem;}
         .member-list li:last-child { border-bottom: none; }
-        
         .member-list .member-leader .member-name { color: var(--leader-yellow); font-weight: 700; }
         
         @media (max-width: 768px) {
-            body { 
-                padding: 0.5rem; 
-            }
-            .header h1 {
-                font-size: 2rem;
-                letter-spacing: 2px;
-            }
-
-            /* Kartu jadwal hari ini versi mobile */
-            .todays-picket-card {
-                padding: 1.5rem;
-            }
-            .todays-picket-card .picket-title {
-                font-size: 1.5rem;
-            }
-            .todays-picket-card .picket-day-kanji {
-                font-size: 2.2rem;
-            }
-            .todays-picket-card .picket-group-name {
-                font-size: 2.8rem;
-            }
-            .todays-picket-card .picket-leader {
-                font-size: 1.1rem;
-            }
-
-            /* Tombol agar responsif */
-            .report-button, .whatsapp-button {
-                width: 90%;
-                max-width: 250px; /* Batas lebar maks */
-                padding: 0.75rem 1rem;
-            }
-            
-            /* Filter section */
-            .controls-section {
-                padding: 1rem;
-            }
-            .grid-layout {
-                grid-template-columns: 1fr;
-            }
-
-            /* Hasil pencarian */
-            #results {
-                grid-template-columns: 1fr; /* Satu kolom di mobile */
-            }
-            .schedule-card {
-                padding: 1rem;
-            }
-            .card-header .date-info .date {
-                font-size: 1.2rem;
-            }
-            
-            /* Modal */
-            .modal-content {
-                width: 95%;
-                padding: 1rem;
-            }
-            #reportModal .modal-content {
-                height: 85vh;
-            }
-            .modal-title {
-                font-size: 1.2rem;
-            }
+            body { padding: 0.5rem; }
+            .header h1 { font-size: 2rem; letter-spacing: 2px; }
+            .todays-picket-card { padding: 1.5rem; }
+            .todays-picket-card .picket-title { font-size: 1.5rem; }
+            .todays-picket-card .picket-day-kanji { font-size: 2.2rem; }
+            .todays-picket-card .picket-group-name { font-size: 2.8rem; }
+            .todays-picket-card .picket-leader { font-size: 1.1rem; }
+            .report-button, .whatsapp-button { width: 90%; max-width: 250px; padding: 0.75rem 1rem; }
+            .controls-section { padding: 1rem; }
+            .grid-layout { grid-template-columns: 1fr; }
+            #results { grid-template-columns: 1fr; }
+            .schedule-card { padding: 1rem; }
+            .card-header .date-info .date { font-size: 1.2rem; }
+            .modal-content { width: 95%; padding: 1rem; }
+            #reportModal .modal-content { height: 85vh; width: 95%; } /* Ukuran modal laporan di mobile */
+            .modal-title { font-size: 1.2rem; }
         }
     </style>
     <!-- =================== KODE CSS SELESAI DI SINI =================== -->
@@ -473,7 +228,7 @@
         </div>
     </div>
 
-    <!-- Modal untuk Laporan Harian -->
+    <!-- Modal untuk Laporan Harian (Kembali ke Iframe) -->
     <div class="modal-overlay" id="reportModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -495,16 +250,13 @@
             const overrideSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTMipEziynZlvItkNJ1TDobydXdW7_UIIpH0nDtdgjbMtjtjtiFKjj2Upyo_m5cCYwErcApyXc8U0mr/pub?gid=0&single=true&output=csv';
             const whatsappLinks = { 'Grup A': 'https://chat.whatsapp.com/Lbch5nBMymO1N9LSGfssSX', 'Grup B': 'https://chat.whatsapp.com/DrqsAD4SJqXD9AHUxkqJx6', 'Grup C': 'https://chat.whatsapp.com/DIzIRfvL0UC9UAuMTwpdmo', 'Grup D': 'https://chat.whatsapp.com/Ee4PeEc2rMmDqzjxXlEa2u', 'Grup E': 'https://chat.whatsapp.com/LFCqAjBP01WEDF0stSlc5e', 'Grup F': 'https://chat.whatsapp.com/JNTD0iJgZIYGliPNpBlgHG', 'Grup G': 'https://chat.whatsapp.com/JwH6rNz94bWCgrIzLrdQ2D?mode=ac_t', 'Grup H': 'https://chat.whatsapp.com/GbAe6Ot3Jg89lSD9fiz8TH', 'Grup I': 'https://chat.whatsapp.com/Ln2qfWAgfpR6T2DunwNvFc', 'Grup J': 'https://chat.whatsapp.com/BrO4vbCnqBVJFRSWHwcuuZ', 'Grup K': 'https://chat.whatsapp.com/DwAJe79Jp0p4rhpQiJmVYY', 'Grup L': 'https://chat.whatsapp.com/KRMzu5GPivuFDuxJePBfDJ', 'Grup M': 'https://chat.whatsapp.com/CnJhJU0fuTw0MzGPCwdgtG', 'Grup N': 'https://chat.whatsapp.com/Hy9s1Yh6kJEC6Th0l2Ltcd', 'Grup O': 'https://chat.whatsapp.com/Fkt4MFsovng9VD2r3Ao1In' };
             
-            // Anchor diubah ke tanggal yang ditentukan dengan grup yang sesuai
             const anchorDate = new Date('2025-09-18T00:00:00'); 
-            const anchorGroupIndex = 7; // Grup H adalah index ke-7 (dimulai dari 0)
+            const anchorGroupIndex = 7;
             const groups = ['Grup A', 'Grup B', 'Grup C', 'Grup D', 'Grup E', 'Grup F', 'Grup G', 'Grup H', 'Grup I', 'Grup J', 'Grup K', 'Grup L', 'Grup M', 'Grup N', 'Grup O'];
             const daysOfWeekJP = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
             const dayColorClasses = ['day-sun', 'day-mon', 'day-tue', 'day-wed', 'day-thu', 'day-fri', 'day-sat'];
             const nationalHolidays = {'2025-01-01': 'Tahun Baru', '2025-01-27': 'Isra Mikraj', '2025-01-29': 'Imlek', '2025-03-29': 'Nyepi', '2025-03-31': 'Idul Fitri', '2025-04-01': 'Idul Fitri', '2025-05-01': 'Hari Buruh', '2025-05-12': 'Waisak', '2025-05-29': 'Kenaikan Isa Almasih', '2025-06-01': 'Lahir Pancila', '2025-06-07': 'Idul Adha', '2025-06-27': 'Tahun Baru Islam', '2025-08-17': 'Kemerdekaan RI', '2025-09-05': 'Maulid Nabi', '2025-12-25': 'Natal'};
             
-            // --- KUMPULAN GAMBAR BARU ---
-            // Membuat array berisi nama file dari '1.jpg' hingga '29.jpg'
             const allImages = Array.from({ length: 29 }, (_, i) => `${i + 1}.jpg`);
 
             const ui = {
@@ -517,27 +269,24 @@
                 searchButton: document.getElementById('searchButton'),
                 results: document.getElementById('results'),
                 status: document.getElementById('status'), memberModal: document.getElementById('memberModal'),
-                modalContent: document.querySelector('#memberModal .modal-content'), // Target modal anggota secara spesifik
+                modalContent: document.querySelector('#memberModal .modal-content'),
                 modalGroupName: document.getElementById('modalGroupName'), modalMemberList: document.getElementById('modalMemberList'),
                 closeModalButton: document.getElementById('closeModalButton'), modalGroupLink: document.getElementById('modalGroupLink'),
                 reportModal: document.getElementById('reportModal'),
                 closeReportModalButton: document.getElementById('closeReportModalButton'),
             };
             
-            let currentBodyImageIndex = 0;
+            let currentBodyImageIndex = 0, memberData = [], fullSchedule = [], scheduleOverrides = {};
 
             function changeBodyBackground() {
-                // Menggunakan allImages untuk background body
                 currentBodyImageIndex = (currentBodyImageIndex + 1) % allImages.length;
                 ui.body.style.backgroundImage = `url('${allImages[currentBodyImageIndex]}')`;
             }
             function setRandomFilterBackground() {
-                 // Menggunakan allImages untuk background filter
                 const randomIndex = Math.floor(Math.random() * allImages.length);
                 ui.controlsSection.style.backgroundImage = `url('${allImages[randomIndex]}')`;
             }
             function setRandomModalBackground() {
-                // Menggunakan allImages untuk background modal
                 const randomIndex = Math.floor(Math.random() * allImages.length);
                 ui.modalContent.style.backgroundImage = `url('${allImages[randomIndex]}')`;
             }
@@ -553,14 +302,13 @@
                 try {
                     const urlWithCacheBuster = `${memberSheetURL}&_=${new Date().getTime()}`;
                     const response = await fetch(urlWithCacheBuster);
-                    if (!response.ok) throw new Error('Gagal mengambil data anggota dari Google Sheet.');
+                    if (!response.ok) throw new Error('Gagal mengambil data anggota.');
                     const csvText = await response.text();
                     const rows = csvText.trim().replace(/\r/g, '').split('\n');
                     const headers = rows[0].split(',').map(h => h.trim().replace(/"/g, ''));
                     const dataByGroup = {};
                     headers.forEach(h => { if (h) dataByGroup[h] = []; });
-                    for (let rowIndex = 1; rowIndex < rows.length; rowIndex++) {
-                        const row = rows[rowIndex];
+                    rows.slice(1).forEach(row => {
                         const values = row.split(',').map(v => v.trim().replace(/"/g, ''));
                         values.forEach((memberInfo, colIndex) => {
                             const groupName = headers[colIndex];
@@ -569,10 +317,10 @@
                                 dataByGroup[groupName].push(match ? { name: match[1].trim(), room: match[2] } : { name: memberInfo, room: null });
                             }
                         });
-                    }
+                    });
                     memberData = Object.keys(dataByGroup).map(group => ({ group, members: dataByGroup[group] }));
                 } catch (error) { 
-                    ui.status.textContent = "❌ Gagal memuat data anggota."; 
+                    ui.status.textContent = `❌ ${error.message}`; 
                     console.error("Error loading member data:", error); 
                 }
             }
@@ -581,69 +329,43 @@
                 try {
                     const urlWithCacheBuster = `${overrideSheetURL}&_=${new Date().getTime()}`;
                     const response = await fetch(urlWithCacheBuster);
-                    if (!response.ok) throw new Error(`Gagal mengambil data dari Google Sheet: ${response.statusText}`);
+                    if (!response.ok) throw new Error(`Gagal mengambil data perubahan jadwal.`);
                     const csvText = await response.text();
-                    const rows = csvText.trim().replace(/\r/g, '').split('\n');
-                    if (rows.length < 2) return;
-                    const headers = rows[0].split(',').map(h => h.trim().toLowerCase().replace(/"/g, ''));
-                    const dateIndex = headers.indexOf('tanggal');
-                    const pagiIndex = headers.indexOf('hanya piket pagi');
-                    const soreIndex = headers.indexOf('hanya piket sore');
-                    const liburIndex = headers.indexOf('tidak ada piket');
-                    if (dateIndex === -1) throw new Error("Kolom 'Tanggal' tidak ditemukan.");
-                    const newOverrides = {};
-                    rows.slice(1).forEach(row => {
-                        const values = row.split(',');
-                        const dateStr = (values[dateIndex] || '').trim().replace(/"/g, '');
+                    const rows = csvText.trim().replace(/\r/g, '').split('\n').slice(1);
+                    rows.forEach(row => {
+                        const [dateStr, pagi, sore, libur] = row.split(',').map(v => (v || '').trim().toLowerCase().replace(/"/g, ''));
                         if (!dateStr) return;
                         const parts = dateStr.split('/');
                         if (parts.length !== 3) return;
                         const yyyyMMdd = `${parts[2]}-${String(parts[1]).padStart(2, '0')}-${String(parts[0]).padStart(2, '0')}`;
-                        const isHanyaPagi = pagiIndex !== -1 && (values[pagiIndex] || '').trim().toLowerCase() === 'y';
-                        const isHanyaSore = soreIndex !== -1 && (values[soreIndex] || '').trim().toLowerCase() === 'y';
-                        const isLibur = liburIndex !== -1 && (values[liburIndex] || '').trim().toLowerCase() === 'y';
-                        if (isLibur) newOverrides[yyyyMMdd] = { type: 'LIBUR' };
-                        else if (isHanyaSore) newOverrides[yyyyMMdd] = { type: 'HANYA_SORE' };
-                        else if (isHanyaPagi) newOverrides[yyyyMMdd] = { type: 'HANYA_PAGI' };
+                        if (libur === 'y') scheduleOverrides[yyyyMMdd] = { type: 'LIBUR' };
+                        else if (sore === 'y') scheduleOverrides[yyyyMMdd] = { type: 'HANYA_SORE' };
+                        else if (pagi === 'y') scheduleOverrides[yyyyMMdd] = { type: 'HANYA_PAGI' };
                     });
-                    scheduleOverrides = newOverrides;
                 } catch (error) {
-                    console.error("Error loading overrides from Google Sheet:", error);
-                    ui.status.innerHTML += `<br><span style="color: var(--accent-red);">⚠️ Gagal memuat data perubahan jadwal. ${error.message}</span>`;
+                    console.error("Error loading overrides:", error);
+                    ui.status.innerHTML += `<br><span style="color: var(--accent-red);">⚠️ ${error.message}</span>`;
                 }
             }
             
-            let fullSchedule = [];
-
             function generateFullSchedule() {
                 const schedule = [];
                 let currentDate = new Date(anchorDate.getTime());
                 let currentGroupIndex = anchorGroupIndex;
-                for (let i = 0; i < 365 * 2; i++) { // Generate schedule for 2 years
+                for (let i = 0; i < 365 * 2; i++) {
                     const dateString = toLocalDateString(currentDate);
                     const dayOfWeek = currentDate.getDay();
                     const isHoliday = !!nationalHolidays[dateString];
                     const override = scheduleOverrides[dateString];
                     const sessions = [];
-                    
                     if (override) {
-                        if (override.type === 'HANYA_PAGI') {
-                            sessions.push({ time: 'Pagi', group: groups[currentGroupIndex % groups.length] });
-                            currentGroupIndex++;
-                        } else if (override.type === 'HANYA_SORE') {
-                            sessions.push({ time: 'Sore', group: groups[currentGroupIndex % groups.length] });
-                            currentGroupIndex++;
-                        }
+                        if (override.type === 'HANYA_PAGI') { sessions.push({ time: 'Pagi', group: groups[currentGroupIndex++ % groups.length] }); }
+                        else if (override.type === 'HANYA_SORE') { sessions.push({ time: 'Sore', group: groups[currentGroupIndex++ % groups.length] }); }
+                    } else if (dayOfWeek === 0 || dayOfWeek === 6 || isHoliday) {
+                        sessions.push({ time: 'Sore', group: groups[currentGroupIndex++ % groups.length] });
                     } else {
-                        if (dayOfWeek === 0 || dayOfWeek === 6 || isHoliday) {
-                            sessions.push({ time: 'Sore', group: groups[currentGroupIndex % groups.length] });
-                            currentGroupIndex++;
-                        } else {
-                            sessions.push({ time: 'Pagi', group: groups[currentGroupIndex % groups.length] });
-                            currentGroupIndex++;
-                            sessions.push({ time: 'Sore', group: groups[currentGroupIndex % groups.length] });
-                            currentGroupIndex++;
-                        }
+                        sessions.push({ time: 'Pagi', group: groups[currentGroupIndex++ % groups.length] });
+                        sessions.push({ time: 'Sore', group: groups[currentGroupIndex++ % groups.length] });
                     }
                     schedule.push({ date: new Date(currentDate.getTime()), sessions, holiday: nationalHolidays[dateString] || null });
                     currentDate.setDate(currentDate.getDate() + 1);
@@ -655,141 +377,82 @@
                 const now = new Date();
                 const currentHour = now.getHours();
                 const session = currentHour < 12 ? 'Pagi' : 'Sore';
-                const title = session === 'Pagi' ? "Jadwal Piket Pagi Ini" : "Jadwal Piket Sore Ini";
+                const title = `Jadwal Piket ${session} Ini`;
                 const todayString = toLocalDateString(now);
                 const dayIndex = now.getDay();
                 const kanjiDay = daysOfWeekJP[dayIndex];
                 const dayClass = dayColorClasses[dayIndex];
                 const fullDate = `${now.getDate()} ${now.toLocaleString('id-ID', { month: 'long' })} ${now.getFullYear()}`;
-
-
                 const todaySchedule = fullSchedule.find(item => toLocalDateString(item.date) === todayString);
-                let contentHTML = '';
 
-                const renderCard = (cardContent) => {
-                    return `<div class="todays-picket-card">
-                                <div class="picket-title">${title}</div>
-                                <div class="picket-day-kanji ${dayClass}">${kanjiDay}</div>
-                                <div class="picket-date">${fullDate}</div>
-                                ${cardContent}
-                            </div>`;
-                };
-
+                const renderCard = (content) => { ui.todaysPicketContainer.innerHTML = `<div class="todays-picket-card"><div class="picket-title">${title}</div><div class="picket-day-kanji ${dayClass}">${kanjiDay}</div><div class="picket-date">${fullDate}</div>${content}</div>`; };
+                
                 if (!todaySchedule || todaySchedule.sessions.length === 0 || (scheduleOverrides[todayString] && scheduleOverrides[todayString].type === 'LIBUR')) {
-                    contentHTML = renderCard(`<div class="picket-group-name" style="font-size: 2.5rem;">Tidak Ada Piket</div>`);
-                } else {
-                    const currentSession = todaySchedule.sessions.find(s => s.time === session);
-
-                    if (!currentSession) {
-                        contentHTML = renderCard(`<div class="picket-group-name" style="font-size: 2.5rem;">Sesi Ini Libur</div>`);
-                    } else {
-                        const groupName = currentSession.group;
-                        const groupInfo = memberData.find(g => g.group === groupName);
-                        const leader = groupInfo && groupInfo.members.length > 0 ? groupInfo.members[0] : { name: 'N/A' };
-                        const members = groupInfo ? groupInfo.members.slice(1) : [];
-                        const groupLink = whatsappLinks[groupName] || '#';
-                        
-                        let membersHTML = members.map(member => `<li>${member.name}</li>`).join('');
-                        if (!groupInfo) {
-                           membersHTML = '<li>Gagal memuat data anggota.</li>';
-                        } else if (members.length === 0) {
-                           membersHTML = '<li>Hanya ketua yang terdata.</li>';
-                        }
-
-                        const mainContent = `
-                                <div class="picket-group-name">${groupName}</div>
-                                <div class="picket-leader">Ketua: ${leader.name}</div>
-                                <div class="picket-members-title">Anggota:</div>
-                                <ol class="picket-members">${membersHTML}</ol>
-                                <div class="button-container">
-                                    <button class="report-button" id="openReportButton">Daily Report</button>
-                                    <a href="${groupLink}" class="whatsapp-button" target="_blank" rel="noopener noreferrer">Grup WhatsApp</a>
-                                </div>`;
-                        contentHTML = renderCard(mainContent);
-                    }
+                    return renderCard(`<div class="picket-group-name" style="font-size: 2.5rem;">Tidak Ada Piket</div>`);
                 }
-                ui.todaysPicketContainer.innerHTML = contentHTML;
+                const currentSession = todaySchedule.sessions.find(s => s.time === session);
+                if (!currentSession) {
+                    return renderCard(`<div class="picket-group-name" style="font-size: 2.5rem;">Sesi Ini Libur</div>`);
+                }
+                
+                const { group: groupName } = currentSession;
+                const groupInfo = memberData.find(g => g.group === groupName);
+                const leader = groupInfo?.members[0]?.name || 'N/A';
+                const members = groupInfo?.members.slice(1).map(m => `<li>${m.name}</li>`).join('') || '<li>Data anggota tidak ditemukan.</li>';
+                const groupLink = whatsappLinks[groupName] || '#';
+                
+                const mainContent = `<div class="picket-group-name">${groupName}</div><div class="picket-leader">Ketua: ${leader}</div><div class="picket-members-title">Anggota:</div><ol class="picket-members">${members}</ol><div class="button-container"><button class="report-button" id="openReportButton">Daily Report</button><a href="${groupLink}" class="whatsapp-button" target="_blank" rel="noopener noreferrer">Grup WhatsApp</a></div>`;
+                renderCard(mainContent);
             }
 
             function displayResults(schedule, sessionFilter) {
                 ui.results.innerHTML = '';
-                if (schedule.length === 0) {
-                    ui.status.textContent = "Tidak ada jadwal yang cocok dengan filter.";
-                    ui.status.style.display = 'block';
-                    return;
-                }
-                ui.status.style.display = 'none';
-                let resultsFound = false;
-                schedule.forEach(item => {
-                    const date = item.date;
-                    const dayIndex = date.getDay();
-                    const dayClass = dayColorClasses[dayIndex];
-                    const dayKanji = daysOfWeekJP[dayIndex];
-                    const dateFormatted = `${date.getDate()} ${date.toLocaleString('id-ID', { month: 'long' })}`;
-                    const dayHTML = `<span class="${dayClass} kanji-day">${dayKanji}</span>, ${date.getFullYear()}`;
-                    const holidayTag = item.holiday ? `<div class="holiday-tag">${item.holiday}</div>` : '';
+                const matchingCards = schedule.map(item => {
+                    const { date, holiday } = item;
                     const dateString = toLocalDateString(date);
                     const override = scheduleOverrides[dateString];
-                    let sessionsHTML = '';
-                    let cardShouldBeDisplayed = false;
-                    if (override && override.type === 'LIBUR' && !sessionFilter) {
-                        sessionsHTML = `<div class="session-item" style="justify-content:center;"><div style="color:var(--accent-color); font-weight:bold;">Tidak Ada Piket</div></div>`;
-                        cardShouldBeDisplayed = true;
-                    } else {
-                        const filteredSessions = sessionFilter ? item.sessions.filter(s => s.time === sessionFilter) : item.sessions;
-                        if (filteredSessions.length > 0) {
-                            sessionsHTML = filteredSessions.map(s => `<div class="session-item"><div class="session-time">${s.time}</div><div class="session-group" data-groupname="${s.group}">${s.group}</div></div>`).join('');
-                            cardShouldBeDisplayed = true;
-                        }
+                    const dayIndex = date.getDay();
+                    
+                    if (override?.type === 'LIBUR' && !sessionFilter) {
+                        return `<div class="schedule-card"><div class="card-header"><div class="date-info"><div class="date">${date.getDate()} ${date.toLocaleString('id-ID', { month: 'long' })}</div><div class="day"><span class="${dayColorClasses[dayIndex]} kanji-day">${daysOfWeekJP[dayIndex]}</span>, ${date.getFullYear()}</div></div></div><div class="card-session"><div class="session-item" style="justify-content:center; color:var(--accent-color); font-weight:bold;">Tidak Ada Piket</div></div></div>`;
                     }
-                    if (cardShouldBeDisplayed) {
-                         resultsFound = true;
-                         ui.results.innerHTML += `<div class="schedule-card"><div class="card-header"><div class="date-info"><div class="date">${dateFormatted}</div><div class="day">${dayHTML}</div></div>${holidayTag}</div><div class="card-session">${sessionsHTML}</div></div>`;
-                    }
-                });
-                 if(!resultsFound){
+                    const filteredSessions = sessionFilter ? item.sessions.filter(s => s.time === sessionFilter) : item.sessions;
+                    if (filteredSessions.length === 0) return '';
+
+                    const sessionsHTML = filteredSessions.map(s => `<div class="session-item"><div class="session-time">${s.time}</div><div class="session-group" data-groupname="${s.group}">${s.group}</div></div>`).join('');
+                    const holidayTag = holiday ? `<div class="holiday-tag">${holiday}</div>` : '';
+                    
+                    return `<div class="schedule-card"><div class="card-header"><div class="date-info"><div class="date">${date.getDate()} ${date.toLocaleString('id-ID', { month: 'long' })}</div><div class="day"><span class="${dayColorClasses[dayIndex]} kanji-day">${daysOfWeekJP[dayIndex]}</span>, ${date.getFullYear()}</div></div>${holidayTag}</div><div class="card-session">${sessionsHTML}</div></div>`;
+                }).join('');
+
+                if (matchingCards) {
+                    ui.results.innerHTML = matchingCards;
+                    ui.status.style.display = 'none';
+                } else {
                     ui.status.textContent = "Tidak ada jadwal yang cocok dengan filter.";
                     ui.status.style.display = 'block';
-                 }
+                }
             }
 
             function applyFilters() {
                 const startInput = ui.startDate.valueAsDate;
                 const endInput = ui.endDate.valueAsDate;
+                const today = new Date(); today.setHours(0, 0, 0, 0);
+
                 let filtered = fullSchedule.filter(item => {
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-
-                    if (!startInput && !endInput && item.date < today) {
-                        return false;
-                    }
-
-                    if (startInput) {
-                        const startDate = new Date(startInput.getFullYear(), startInput.getMonth(), startInput.getDate());
-                        if (item.date < startDate) return false;
-                    }
-                    if (endInput) {
-                         const endDate = new Date(endInput.getFullYear(), endInput.getMonth(), endInput.getDate());
-                        if (item.date > endDate) return false;
-                    }
+                    if (!startInput && !endInput && item.date < today) return false;
+                    if (startInput && item.date < startInput) return false;
+                    if (endInput && item.date > endInput) return false;
                     return true;
                 });
+
                 const group = ui.groupSearch.value;
-                if (group) {
-                    filtered = filtered.filter(i => {
-                        const override = scheduleOverrides[toLocalDateString(i.date)];
-                        if (override && override.type === 'LIBUR') return false; 
-                        return i.sessions.some(s => s.group === group);
-                    });
-                }
+                if (group) { filtered = filtered.filter(i => i.sessions.some(s => s.group === group)); }
+                
                 const term = ui.searchTerm.value.toLowerCase().trim();
                 if (term) {
-                    const matchingGroups = new Set(memberData.filter(g => g.members.some(m => m.name.toLowerCase().includes(term) || (m.room && m.room.includes(term)))).map(g => g.group));
-                    filtered = filtered.filter(i => {
-                        const override = scheduleOverrides[toLocalDateString(i.date)];
-                        if (override && override.type === 'LIBUR') return false;
-                        return i.sessions.some(s => matchingGroups.has(s.group));
-                    });
+                    const matchingGroups = new Set(memberData.filter(g => g.members.some(m => m.name.toLowerCase().includes(term) || m.room?.includes(term))).map(g => g.group));
+                    filtered = filtered.filter(i => i.sessions.some(s => matchingGroups.has(s.group)));
                 }
                 displayResults(filtered, ui.sessionSearch.value);
             }
@@ -799,17 +462,8 @@
                 const groupInfo = memberData.find(g => g.group === groupName);
                 if (!groupInfo) return;
                 ui.modalGroupName.textContent = `Anggota ${groupName}`;
-                ui.modalMemberList.innerHTML = '';
-                if (groupInfo.members.length > 0) {
-                    groupInfo.members.forEach((member, index) => {
-                        const li = document.createElement('li');
-                        if (index === 0) li.classList.add('member-leader');
-                        li.innerHTML = `<span class="member-name">${member.name}</span><span class="member-room">${member.room || ''}</span>`;
-                        ui.modalMemberList.appendChild(li);
-                    });
-                } else {
-                    ui.modalMemberList.innerHTML = '<li>Tidak ada data anggota.</li>';
-                }
+                const membersHTML = groupInfo.members.map((member, index) => `<li class="${index === 0 ? 'member-leader' : ''}"><span class="member-name">${member.name}</span><span class="member-room">${member.room || ''}</span></li>`).join('');
+                ui.modalMemberList.innerHTML = membersHTML || '<li>Tidak ada data anggota.</li>';
                 ui.modalGroupLink.href = whatsappLinks[groupName] || '#';
                 ui.modalGroupLink.style.display = whatsappLinks[groupName] ? 'block' : 'none';
                 ui.memberModal.style.display = 'flex';
@@ -822,13 +476,15 @@
 
                 ui.status.textContent = 'Memuat data anggota...';
                 await loadMemberData();
-                if (memberData.length === 0) return;
                 
                 ui.status.textContent = 'Memuat data perubahan jadwal...';
                 await loadOverridesFromSheet();
                 
                 ui.status.textContent = 'Membuat jadwal...';
-                groups.forEach(g => { const opt = document.createElement('option'); opt.value = g; opt.textContent = g; ui.groupSearch.appendChild(opt); });
+                groups.forEach(g => {
+                    const optFilter = document.createElement('option'); optFilter.value = g; optFilter.textContent = g; ui.groupSearch.appendChild(optFilter);
+                });
+
                 generateFullSchedule();
                 displayTodaysPicket();
                 setInterval(displayTodaysPicket, 60000); 
@@ -836,23 +492,22 @@
 
                 ui.searchButton.addEventListener('click', applyFilters);
                 ui.results.addEventListener('click', e => { if (e.target.classList.contains('session-group')) openMemberModal(e.target.dataset.groupname); });
-                ui.closeModalButton.addEventListener('click', () => { ui.memberModal.style.display = 'none'; });
-                ui.memberModal.addEventListener('click', e => { if (e.target === ui.memberModal) ui.memberModal.style.display = 'none'; });
-
-                // Event listeners untuk modal laporan harian
+                const closeModal = (modal) => { modal.style.display = 'none'; };
+                ui.closeModalButton.addEventListener('click', () => closeModal(ui.memberModal));
+                ui.memberModal.addEventListener('click', e => { if (e.target === ui.memberModal) closeModal(ui.memberModal); });
+                
                 ui.todaysPicketContainer.addEventListener('click', e => {
                     if (e.target.id === 'openReportButton') {
                         ui.reportModal.style.display = 'flex';
                     }
                 });
-                ui.closeReportModalButton.addEventListener('click', () => { ui.reportModal.style.display = 'none'; });
-                ui.reportModal.addEventListener('click', e => { if (e.target === ui.reportModal) ui.reportModal.style.display = 'none'; });
+                ui.closeReportModalButton.addEventListener('click', () => closeModal(ui.reportModal));
+                ui.reportModal.addEventListener('click', e => { if (e.target === ui.reportModal) closeModal(ui.reportModal); });
             }
             
             init();
         });
     </script>
-    <!-- =============== KODE JAVASCRIPT SELESAI DI SINI =============== -->
 </body>
 </html>
 
