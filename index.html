@@ -7,18 +7,20 @@
     
     <!-- ================== KODE CSS DIMULAI DI SINI ================== -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique:wght@300;400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique:wght@300;400;700;900&display=swap');
         
         :root {
-            --bg-color: #1a202c;
+            --bg-color: #121212;
             --primary-text-color: #e2e8f0;
             --secondary-text-color: #a0aec0;
             --accent-color: #e53e3e; /* Aksen merah ala Jepang */
-            --card-bg: rgba(26, 32, 44, 0.6); /* Latar kartu transparan */
+            --card-bg: rgba(26, 32, 44, 0.75); /* Latar kartu transparan */
             --border-color: rgba(255, 255, 255, 0.1);
             --input-bg: rgba(45, 55, 72, 0.8);
             --whatsapp-green: #25D366;
             --leader-yellow: #f6e05e;
+            --neon-glow-color: #00ffff; /* Warna awal untuk neon */
+            --brand-color: #FF4D4D;
         }
 
         body {
@@ -27,15 +29,14 @@
             font-family: 'Zen Kaku Gothic Antique', sans-serif;
             margin: 0;
             padding: 1rem;
-            /* Transisi untuk pergantian background */
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             transition: background-image 1s ease-in-out;
             position: relative;
+            overflow-x: hidden; /* Mencegah scroll horizontal dari pseudo-elements */
         }
-
-        /* Overlay gelap agar teks mudah dibaca di atas background */
+        
         body::before {
             content: '';
             position: fixed;
@@ -43,23 +44,116 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             z-index: -1;
         }
 
-        .container { max-width: 1400px; margin: auto; }
+        /* Dekorasi bentuk ala Jepang */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(229, 62, 62, 0.1), transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container { 
+            max-width: 1400px; 
+            margin: auto; 
+            position: relative;
+            z-index: 1;
+        }
         
         .header h1 {
             font-family: 'Zen Kaku Gothic Antique', sans-serif;
             text-align: center;
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: #fff;
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
             margin-bottom: 2.5rem;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+        }
+
+        @keyframes neon-colors {
+            0%, 100% { --neon-glow-color: #00ffff; }
+            25% { --neon-glow-color: #ff00ff; }
+            50% { --neon-glow-color: #00ff00; }
+            75% { --neon-glow-color: #fce100; }
+        }
+
+        #todays-picket-container { margin-bottom: 2rem; }
+
+        .todays-picket-card {
+            background-color: var(--card-bg);
+            border: 2px solid var(--neon-glow-color);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            animation: neon-colors 5s linear infinite;
+            box-shadow: 0 0 5px var(--neon-glow-color), 0 0 15px var(--neon-glow-color), 0 0 30px var(--neon-glow-color), inset 0 0 10px var(--neon-glow-color);
+            transition: border-color 0.5s linear, box-shadow 0.5s linear;
         }
         
+        .todays-picket-card .picket-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .todays-picket-card .picket-date {
+            font-size: 1.1rem;
+            color: var(--secondary-text-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .todays-picket-card .picket-group-name {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--neon-glow-color);
+            transition: text-shadow 0.5s ease-in-out;
+        }
+
+        .todays-picket-card .picket-leader {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--leader-yellow);
+            margin-bottom: 1rem;
+        }
+
+        .todays-picket-card .picket-members-title {
+            text-align: left;
+            max-width: 300px;
+            margin: 0 auto 0.5rem auto;
+            font-weight: bold;
+        }
+        
+        .todays-picket-card .picket-members {
+            list-style-position: inside;
+            padding: 0;
+            margin: 0 auto 1.5rem auto;
+            max-width: 300px;
+            text-align: left;
+        }
+        
+        .todays-picket-card .picket-members li {
+            padding: 0.25rem 0;
+            color: var(--primary-text-color);
+        }
+
         .controls-section {
             background-color: var(--card-bg);
             padding: 1.5rem;
@@ -76,7 +170,7 @@
         .controls-section h2 { 
             margin-top: 0;
             font-weight: 700;
-            color: var(--primary-text-color);
+            color: var(--brand-color);
             margin-bottom: 1.5rem;
             display: inline-block;
             background-color: rgba(0, 0, 0, 0.75);
@@ -111,6 +205,24 @@
             border-color: var(--accent-color);
             box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.4);
         }
+
+        #searchButton {
+            grid-column: 1 / -1; /* Tombol search akan memanjang di semua kolom grid */
+            margin-top: 1rem;
+            padding: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(90deg, var(--brand-color), #e52e71);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #searchButton:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(229, 46, 113, 0.4);
+        }
         
         #results { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
         
@@ -133,7 +245,7 @@
 
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem; }
         .card-header .date-info .date { font-size: 1.5rem; font-weight: 700; color: var(--primary-text-color); }
-        .card-header .date-info .day { font-size: 0.9rem; color: var(--secondary-text-color); }
+        .card-header .date-info .day { font-size: 1rem; font-weight: bold; color: var(--brand-color); }
         .card-header .holiday-tag { background-color: var(--accent-color); color: #fff; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; align-self: center; }
         .card-session { display: flex; flex-direction: column; gap: 1rem; }
         .session-item { display: flex; align-items: center; }
@@ -173,18 +285,16 @@
         .member-list li { padding: 0.75rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.75); border-radius: 8px; margin-bottom: 0.5rem;}
         .member-list li:last-child { border-bottom: none; }
         
-        /* Style untuk Ketua Grup */
-        .member-list .member-leader .member-name {
-            color: var(--leader-yellow);
-            font-weight: 700;
-        }
-        .whatsapp-button { display: block; background-color: var(--whatsapp-green); color: white; text-align: center; padding: 0.75rem; border-radius: 8px; text-decoration: none; font-weight: bold; transition: background-color 0.2s; }
-        .whatsapp-button:hover { background-color: #1EBE57; }
+        .member-list .member-leader .member-name { color: var(--leader-yellow); font-weight: 700; }
+        .whatsapp-button { display: inline-block; background-color: var(--whatsapp-green); color: white; text-align: center; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; transition: background-color 0.2s, transform 0.2s; }
+        .whatsapp-button:hover { background-color: #1EBE57; transform: scale(1.05); }
         
         @media (max-width: 768px) {
-            body { padding: 0.5rem; } .header h1 { font-size: 1.8rem; }
+            body { padding: 0.5rem; } .header h1 { font-size: 2rem; }
             .grid-layout { grid-template-columns: 1fr; }
             .card-header .date-info .date { font-size: 1.2rem; }
+            .todays-picket-card .picket-group-name { font-size: 2.5rem; }
+            .todays-picket-card .picket-title { font-size: 1.5rem; }
         }
     </style>
     <!-- =================== KODE CSS SELESAI DI SINI =================== -->
@@ -192,6 +302,8 @@
 <body>
     <div class="container">
         <header class="header"><h1>Jadwal Piket Touban</h1></header>
+
+        <div id="todays-picket-container"></div>
 
         <div class="controls-section">
             <h2>Filter Pencarian</h2>
@@ -201,6 +313,7 @@
                 <div class="control-group"><label for="groupSearch">Cari Grup</label><select id="groupSearch"><option value="">Semua Grup</option></select></div>
                 <div class="control-group"><label for="sessionSearch">Sesi</label><select id="sessionSearch"><option value="">Semua Sesi</option><option value="Pagi">Pagi</option><option value="Sore">Sore</option></select></div>
                 <div class="control-group"><label for="searchTerm">Cari Nama / No. Kamar</label><input type="text" id="searchTerm" placeholder="Ketik di sini..."></div>
+                <button id="searchButton">Search</button>
             </div>
         </div>
         
@@ -208,7 +321,6 @@
         <div id="results"></div>
     </div>
 
-    <!-- Modal untuk menampilkan anggota -->
     <div class="modal-overlay" id="memberModal">
         <div class="modal-content">
             <div class="modal-header"><h2 class="modal-title" id="modalGroupName"></h2><button class="close-button" id="closeModalButton">&times;</button></div>
@@ -221,27 +333,30 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // --- KONFIGURASI JADWAL & GAMBAR ---
             const memberSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTMipEziynZlvItkNJ1TDobydXdW7_UIIpH0nDtdgjbMtjtjtiFKjj2Upyo_m5cCYwErcApyXc8U0mr/pub?gid=186361258&single=true&output=csv';
             const overrideSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTMipEziynZlvItkNJ1TDobydXdW7_UIIpH0nDtdgjbMtjtjtiFKjj2Upyo_m5cCYwErcApyXc8U0mr/pub?gid=0&single=true&output=csv';
             const whatsappLinks = { 'Grup A': 'https://chat.whatsapp.com/Lbch5nBMymO1N9LSGfssSX', 'Grup B': 'https://chat.whatsapp.com/DrqsAD4SJqXD9AHUxkqJx6', 'Grup C': 'https://chat.whatsapp.com/DIzIRfvL0UC9UAuMTwpdmo', 'Grup D': 'https://chat.whatsapp.com/Ee4PeEc2rMmDqzjxXlEa2u', 'Grup E': 'https://chat.whatsapp.com/LFCqAjBP01WEDF0stSlc5e', 'Grup F': 'https://chat.whatsapp.com/JNTD0iJgZIYGliPNpBlgHG', 'Grup G': 'https://chat.whatsapp.com/JwH6rNz94bWCgrIzLrdQ2D?mode=ac_t', 'Grup H': 'https://chat.whatsapp.com/GbAe6Ot3Jg89lSD9fiz8TH', 'Grup I': 'https://chat.whatsapp.com/Ln2qfWAgfpR6T2DunwNvFc', 'Grup J': 'https://chat.whatsapp.com/BrO4vbCnqBVJFRSWHwcuuZ', 'Grup K': 'https://chat.whatsapp.com/DwAJe79Jp0p4rhpQiJmVYY', 'Grup L': 'https://chat.whatsapp.com/KRMzu5GPivuFDuxJePBfDJ', 'Grup M': 'https://chat.whatsapp.com/CnJhJU0fuTw0MzGPCwdgtG', 'Grup N': 'https://chat.whatsapp.com/Hy9s1Yh6kJEC6Th0l2Ltcd', 'Grup O': 'https://chat.whatsapp.com/Fkt4MFsovng9VD2r3Ao1In' };
-            const anchorDate = new Date('2025-09-09T00:00:00');
-            const anchorGroupIndex = 6;
+            
+            // Anchor diubah ke tanggal yang ditentukan dengan grup yang sesuai
+            const anchorDate = new Date('2025-09-18T00:00:00'); 
+            const anchorGroupIndex = 7; // Grup H adalah index ke-7 (dimulai dari 0)
             const groups = ['Grup A', 'Grup B', 'Grup C', 'Grup D', 'Grup E', 'Grup F', 'Grup G', 'Grup H', 'Grup I', 'Grup J', 'Grup K', 'Grup L', 'Grup M', 'Grup N', 'Grup O'];
-            const daysOfWeek = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            const daysOfWeekJP = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
             const nationalHolidays = {'2025-01-01': 'Tahun Baru', '2025-01-27': 'Isra Mikraj', '2025-01-29': 'Imlek', '2025-03-29': 'Nyepi', '2025-03-31': 'Idul Fitri', '2025-04-01': 'Idul Fitri', '2025-05-01': 'Hari Buruh', '2025-05-12': 'Waisak', '2025-05-29': 'Kenaikan Isa Almasih', '2025-06-01': 'Lahir Pancasila', '2025-06-07': 'Idul Adha', '2025-06-27': 'Tahun Baru Islam', '2025-08-17': 'Kemerdekaan RI', '2025-09-05': 'Maulid Nabi', '2025-12-25': 'Natal'};
             
-            // --- Daftar Nama File Gambar ---
             const bodyImages = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg'];
             const filterImages = ['7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg'];
             const modalImages = ['13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg'];
 
             const ui = {
                 body: document.body,
+                todaysPicketContainer: document.getElementById('todays-picket-container'),
                 controlsSection: document.querySelector('.controls-section'),
                 startDate: document.getElementById('startDate'), endDate: document.getElementById('endDate'),
                 groupSearch: document.getElementById('groupSearch'), sessionSearch: document.getElementById('sessionSearch'),
-                searchTerm: document.getElementById('searchTerm'), results: document.getElementById('results'),
+                searchTerm: document.getElementById('searchTerm'),
+                searchButton: document.getElementById('searchButton'),
+                results: document.getElementById('results'),
                 status: document.getElementById('status'), memberModal: document.getElementById('memberModal'),
                 modalContent: document.querySelector('.modal-content'),
                 modalGroupName: document.getElementById('modalGroupName'), modalMemberList: document.getElementById('modalMemberList'),
@@ -250,7 +365,6 @@
             
             let memberData = [], fullSchedule = [], scheduleOverrides = {}, currentBodyImageIndex = 0;
 
-            // --- FUNGSI BACKGROUND DINAMIS ---
             function changeBodyBackground() {
                 currentBodyImageIndex = (currentBodyImageIndex + 1) % bodyImages.length;
                 ui.body.style.backgroundImage = `url('${bodyImages[currentBodyImageIndex]}')`;
@@ -263,7 +377,6 @@
                 const randomIndex = Math.floor(Math.random() * modalImages.length);
                 ui.modalContent.style.backgroundImage = `url('${modalImages[randomIndex]}')`;
             }
-
 
             const toLocalDateString = d => {
                 const year = d.getFullYear();
@@ -336,18 +449,19 @@
                 }
             }
             
-            function generateFullSchedule(days) {
+            function generateFullSchedule() {
                 const schedule = [];
                 let currentDate = new Date(anchorDate.getTime());
                 let currentGroupIndex = anchorGroupIndex;
-                for (let i = 0; i < days; i++) {
+                for (let i = 0; i < 365 * 2; i++) { // Generate schedule for 2 years
                     const dateString = toLocalDateString(currentDate);
                     const dayOfWeek = currentDate.getDay();
                     const isHoliday = !!nationalHolidays[dateString];
                     const override = scheduleOverrides[dateString];
                     const sessions = [];
-                    const shouldAffectSchedule = currentDate >= anchorDate;
-                    if (override && shouldAffectSchedule) {
+                    
+                    // Don't check shouldAffectSchedule to allow generating past schedules if needed, filtering will handle display
+                    if (override) {
                         if (override.type === 'HANYA_PAGI') {
                             sessions.push({ time: 'Pagi', group: groups[currentGroupIndex % groups.length] });
                             currentGroupIndex++;
@@ -370,6 +484,53 @@
                     currentDate.setDate(currentDate.getDate() + 1);
                 }
                 fullSchedule = schedule;
+            }
+
+             function displayTodaysPicket() {
+                const now = new Date();
+                const currentHour = now.getHours();
+                const session = currentHour < 12 ? 'Pagi' : 'Sore';
+                const title = session === 'Pagi' ? "Jadwal Piket Pagi Ini" : "Jadwal Piket Sore Ini";
+                const todayString = toLocalDateString(now);
+                const dateFormatted = `${daysOfWeekJP[now.getDay()]}, ${now.getDate()} ${now.toLocaleString('id-ID', { month: 'long' })} ${now.getFullYear()}`;
+
+                const todaySchedule = fullSchedule.find(item => toLocalDateString(item.date) === todayString);
+                let contentHTML = '';
+
+                if (!todaySchedule || todaySchedule.sessions.length === 0 || (scheduleOverrides[todayString] && scheduleOverrides[todayString].type === 'LIBUR')) {
+                    contentHTML = `<div class="todays-picket-card"><div class="picket-title">${title}</div><div class="picket-date">${dateFormatted}</div><div class="picket-group-name" style="font-size: 2.5rem;">Tidak Ada Piket</div></div>`;
+                } else {
+                    const currentSession = todaySchedule.sessions.find(s => s.time === session);
+
+                    if (!currentSession) {
+                        contentHTML = `<div class="todays-picket-card"><div class="picket-title">${title}</div><div class="picket-date">${dateFormatted}</div><div class="picket-group-name" style="font-size: 2.5rem;">Sesi Ini Libur</div></div>`;
+                    } else {
+                        const groupName = currentSession.group;
+                        const groupInfo = memberData.find(g => g.group === groupName);
+                        const leader = groupInfo && groupInfo.members.length > 0 ? groupInfo.members[0] : { name: 'N/A' };
+                        const members = groupInfo ? groupInfo.members.slice(1) : [];
+                        const groupLink = whatsappLinks[groupName] || '#';
+                        
+                        let membersHTML = members.map(member => `<li>${member.name}</li>`).join('');
+                        if (!groupInfo) {
+                           membersHTML = '<li>Gagal memuat data anggota.</li>';
+                        } else if (members.length === 0) {
+                           membersHTML = '<li>Hanya ketua yang terdata.</li>';
+                        }
+
+                        contentHTML = `
+                            <div class="todays-picket-card">
+                                <div class="picket-title">${title}</div>
+                                <div class="picket-date">${dateFormatted}</div>
+                                <div class="picket-group-name">${groupName}</div>
+                                <div class="picket-leader">Ketua: ${leader.name}</div>
+                                <div class="picket-members-title">Anggota:</div>
+                                <ol class="picket-members">${membersHTML}</ol>
+                                <a href="${groupLink}" class="whatsapp-button" target="_blank" rel="noopener noreferrer">Grup WhatsApp</a>
+                            </div>`;
+                    }
+                }
+                ui.todaysPicketContainer.innerHTML = contentHTML;
             }
 
             function displayResults(schedule, sessionFilter) {
@@ -401,7 +562,7 @@
                     }
                     if (cardShouldBeDisplayed) {
                          resultsFound = true;
-                         ui.results.innerHTML += `<div class="schedule-card"><div class="card-header"><div class="date-info"><div class="date">${dateFormatted}</div><div class="day">${daysOfWeek[date.getDay()]}, ${date.getFullYear()}</div></div>${holidayTag}</div><div class="card-session">${sessionsHTML}</div></div>`;
+                         ui.results.innerHTML += `<div class="schedule-card"><div class="card-header"><div class="date-info"><div class="date">${dateFormatted}</div><div class="day">${daysOfWeekJP[date.getDay()]}, ${date.getFullYear()}</div></div>${holidayTag}</div><div class="card-session">${sessionsHTML}</div></div>`;
                     }
                 });
                  if(!resultsFound){
@@ -414,6 +575,13 @@
                 const startInput = ui.startDate.valueAsDate;
                 const endInput = ui.endDate.valueAsDate;
                 let filtered = fullSchedule.filter(item => {
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+
+                    if (!startInput && !endInput && item.date < today) {
+                        return false;
+                    }
+
                     if (startInput) {
                         const startDate = new Date(startInput.getFullYear(), startInput.getMonth(), startInput.getDate());
                         if (item.date < startDate) return false;
@@ -445,7 +613,7 @@
             }
             
             function openMemberModal(groupName) {
-                setRandomModalBackground(); // Atur background acak saat modal dibuka
+                setRandomModalBackground();
                 const groupInfo = memberData.find(g => g.group === groupName);
                 if (!groupInfo) return;
                 ui.modalGroupName.textContent = `Anggota ${groupName}`;
@@ -466,24 +634,25 @@
             }
 
             async function init() {
-                // Inisialisasi background
                 ui.body.style.backgroundImage = `url('${bodyImages[0]}')`;
                 setInterval(changeBodyBackground, 10000);
                 setRandomFilterBackground();
 
-                ui.status.textContent = 'Memuat data anggota dari Google Sheet...';
+                ui.status.textContent = 'Memuat data anggota...';
                 await loadMemberData();
                 if (memberData.length === 0) return;
                 
-                ui.status.textContent = 'Memuat data perubahan jadwal dari Google Sheet...';
+                ui.status.textContent = 'Memuat data perubahan jadwal...';
                 await loadOverridesFromSheet();
                 
                 ui.status.textContent = 'Membuat jadwal...';
                 groups.forEach(g => { const opt = document.createElement('option'); opt.value = g; opt.textContent = g; ui.groupSearch.appendChild(opt); });
-                generateFullSchedule(365);
+                generateFullSchedule();
+                displayTodaysPicket();
+                setInterval(displayTodaysPicket, 60000); 
                 applyFilters();
 
-                [ui.startDate, ui.endDate, ui.groupSearch, ui.sessionSearch, ui.searchTerm].forEach(el => el.addEventListener('input', applyFilters));
+                ui.searchButton.addEventListener('click', applyFilters);
                 ui.results.addEventListener('click', e => { if (e.target.classList.contains('session-group')) openMemberModal(e.target.dataset.groupname); });
                 ui.closeModalButton.addEventListener('click', () => ui.memberModal.style.display = 'none');
                 ui.memberModal.addEventListener('click', e => { if (e.target === ui.memberModal) ui.memberModal.style.display = 'none'; });
@@ -495,5 +664,4 @@
     <!-- =============== KODE JAVASCRIPT SELESAI DI SINI =============== -->
 </body>
 </html>
-
 
