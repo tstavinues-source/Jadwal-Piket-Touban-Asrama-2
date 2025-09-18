@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Jadwal Piket Touban</title>
     
+    <!-- Link Font Baru -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Shippori+Mincho&display=swap" rel="stylesheet">
+
     <!-- ================== KODE CSS DIMULAI DI SINI ================== -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique:wght@300;400;700;900&display=swap');
-        
         :root {
             --bg-color: #121212;
             --primary-text-color: #e2e8f0;
@@ -21,12 +24,22 @@
             --leader-yellow: #f6e05e;
             --neon-glow-color: #00ffff; /* Warna awal untuk neon */
             --brand-color: #FF4D4D;
+
+            /* Variabel Warna Hari Filosofis */
+            --day-sun-color: #FF4D4D; /* Merah (Matahari) */
+            --day-mon-color: #E0E0E0; /* Putih/Silver (Bulan) */
+            --day-tue-color: #FF6347; /* Oranye-Merah (Api) */
+            --day-wed-color: #00BFFF; /* Biru Langit (Air) */
+            --day-thu-color: #32CD32; /* Hijau Limau (Kayu) */
+            --day-fri-color: #FFD700; /* Emas (Logam/Emas) */
+            --day-sat-color: #D2691E; /* Coklat Oranye (Tanah) */
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--primary-text-color);
-            font-family: 'Zen Kaku Gothic Antique', sans-serif;
+            /* Menggunakan font baru */
+            font-family: 'M PLUS Rounded 1c', sans-serif;
             margin: 0;
             padding: 1rem;
             background-size: cover;
@@ -70,7 +83,7 @@
         }
         
         .header h1 {
-            font-family: 'Zen Kaku Gothic Antique', sans-serif;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
             text-align: center;
             font-size: 3rem;
             font-weight: 900;
@@ -110,6 +123,19 @@
             margin-bottom: 0.5rem;
             color: #fff;
         }
+
+        /* Gaya baru untuk menonjolkan hari Kanji */
+        .todays-picket-card .picket-day-kanji {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            transition: color 0.3s ease-in-out;
+        }
+        
+        .todays-picket-card .picket-day-kanji, .kanji-day {
+            text-shadow: 0 0 8px currentColor;
+        }
+
 
         .todays-picket-card .picket-date {
             font-size: 1.1rem;
@@ -152,6 +178,42 @@
         .todays-picket-card .picket-members li {
             padding: 0.25rem 0;
             color: var(--primary-text-color);
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .report-button, .whatsapp-button {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.2s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+            width: 220px;
+        }
+        .report-button {
+             background-color: #4A90E2; /* Biru */
+        }
+         .whatsapp-button {
+            background-color: var(--whatsapp-green);
+        }
+        .report-button:hover {
+            background-color: #357ABD;
+            transform: scale(1.05);
+        }
+        .whatsapp-button:hover {
+            background-color: #1EBE57;
+            transform: scale(1.05);
         }
 
         .controls-section {
@@ -198,7 +260,7 @@
             padding: 0.75rem;
             font-size: 1rem;
             transition: all 0.2s ease-in-out;
-            font-family: 'Zen Kaku Gothic Antique', sans-serif;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
         }
         .control-group input:focus, .control-group select:focus { 
             outline: none;
@@ -245,7 +307,7 @@
 
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem; }
         .card-header .date-info .date { font-size: 1.5rem; font-weight: 700; color: var(--primary-text-color); }
-        .card-header .date-info .day { font-size: 1rem; font-weight: bold; color: var(--brand-color); }
+        .card-header .date-info .day { font-size: 1rem; font-weight: bold; }
         .card-header .holiday-tag { background-color: var(--accent-color); color: #fff; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; align-self: center; }
         .card-session { display: flex; flex-direction: column; gap: 1rem; }
         .session-item { display: flex; align-items: center; }
@@ -253,6 +315,16 @@
         .session-group { flex-grow: 1; font-size: 1.1rem; cursor: pointer; transition: color 0.2s; font-weight: 400; }
         .session-group:hover { color: var(--accent-color); }
         #status { text-align: center; font-size: 1.25rem; padding: 3rem; color: var(--secondary-text-color); }
+        
+        /* Kelas Warna Hari */
+        .day-sun { color: var(--day-sun-color); }
+        .day-mon { color: var(--day-mon-color); }
+        .day-tue { color: var(--day-tue-color); }
+        .day-wed { color: var(--day-wed-color); }
+        .day-thu { color: var(--day-thu-color); }
+        .day-fri { color: var(--day-fri-color); }
+        .day-sat { color: var(--day-sat-color); }
+
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 1rem; box-sizing: border-box; backdrop-filter: blur(5px); }
         
@@ -267,6 +339,23 @@
             position: relative;
             background-size: cover;
             background-position: center;
+        }
+
+        #reportModal .modal-content {
+            max-width: 700px; /* Lebih lebar untuk form */
+            height: 90vh; /* Lebih tinggi untuk form */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-body {
+            flex-grow: 1;
+            overflow-y: hidden;
+        }
+        .modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
         
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem; }
@@ -286,15 +375,70 @@
         .member-list li:last-child { border-bottom: none; }
         
         .member-list .member-leader .member-name { color: var(--leader-yellow); font-weight: 700; }
-        .whatsapp-button { display: inline-block; background-color: var(--whatsapp-green); color: white; text-align: center; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; transition: background-color 0.2s, transform 0.2s; }
-        .whatsapp-button:hover { background-color: #1EBE57; transform: scale(1.05); }
         
         @media (max-width: 768px) {
-            body { padding: 0.5rem; } .header h1 { font-size: 2rem; }
-            .grid-layout { grid-template-columns: 1fr; }
-            .card-header .date-info .date { font-size: 1.2rem; }
-            .todays-picket-card .picket-group-name { font-size: 2.5rem; }
-            .todays-picket-card .picket-title { font-size: 1.5rem; }
+            body { 
+                padding: 0.5rem; 
+            }
+            .header h1 {
+                font-size: 2rem;
+                letter-spacing: 2px;
+            }
+
+            /* Kartu jadwal hari ini versi mobile */
+            .todays-picket-card {
+                padding: 1.5rem;
+            }
+            .todays-picket-card .picket-title {
+                font-size: 1.5rem;
+            }
+            .todays-picket-card .picket-day-kanji {
+                font-size: 2.2rem;
+            }
+            .todays-picket-card .picket-group-name {
+                font-size: 2.8rem;
+            }
+            .todays-picket-card .picket-leader {
+                font-size: 1.1rem;
+            }
+
+            /* Tombol agar responsif */
+            .report-button, .whatsapp-button {
+                width: 90%;
+                max-width: 250px; /* Batas lebar maks */
+                padding: 0.75rem 1rem;
+            }
+            
+            /* Filter section */
+            .controls-section {
+                padding: 1rem;
+            }
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+
+            /* Hasil pencarian */
+            #results {
+                grid-template-columns: 1fr; /* Satu kolom di mobile */
+            }
+            .schedule-card {
+                padding: 1rem;
+            }
+            .card-header .date-info .date {
+                font-size: 1.2rem;
+            }
+            
+            /* Modal */
+            .modal-content {
+                width: 95%;
+                padding: 1rem;
+            }
+            #reportModal .modal-content {
+                height: 85vh;
+            }
+            .modal-title {
+                font-size: 1.2rem;
+            }
         }
     </style>
     <!-- =================== KODE CSS SELESAI DI SINI =================== -->
@@ -329,6 +473,20 @@
         </div>
     </div>
 
+    <!-- Modal untuk Laporan Harian -->
+    <div class="modal-overlay" id="reportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Daily Report</h2>
+                <button class="close-button" id="closeReportModalButton">&times;</button>
+            </div>
+            <div class="modal-body">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScd1OMHP2ZOzuPtWGH3hayhPOYFoytfP-3aedC3AGFjq7ELGA/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>
+            </div>
+        </div>
+    </div>
+
+
     <!-- ================= KODE JAVASCRIPT DIMULAI DI SINI ================= -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -342,11 +500,12 @@
             const anchorGroupIndex = 7; // Grup H adalah index ke-7 (dimulai dari 0)
             const groups = ['Grup A', 'Grup B', 'Grup C', 'Grup D', 'Grup E', 'Grup F', 'Grup G', 'Grup H', 'Grup I', 'Grup J', 'Grup K', 'Grup L', 'Grup M', 'Grup N', 'Grup O'];
             const daysOfWeekJP = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
-            const nationalHolidays = {'2025-01-01': 'Tahun Baru', '2025-01-27': 'Isra Mikraj', '2025-01-29': 'Imlek', '2025-03-29': 'Nyepi', '2025-03-31': 'Idul Fitri', '2025-04-01': 'Idul Fitri', '2025-05-01': 'Hari Buruh', '2025-05-12': 'Waisak', '2025-05-29': 'Kenaikan Isa Almasih', '2025-06-01': 'Lahir Pancasila', '2025-06-07': 'Idul Adha', '2025-06-27': 'Tahun Baru Islam', '2025-08-17': 'Kemerdekaan RI', '2025-09-05': 'Maulid Nabi', '2025-12-25': 'Natal'};
+            const dayColorClasses = ['day-sun', 'day-mon', 'day-tue', 'day-wed', 'day-thu', 'day-fri', 'day-sat'];
+            const nationalHolidays = {'2025-01-01': 'Tahun Baru', '2025-01-27': 'Isra Mikraj', '2025-01-29': 'Imlek', '2025-03-29': 'Nyepi', '2025-03-31': 'Idul Fitri', '2025-04-01': 'Idul Fitri', '2025-05-01': 'Hari Buruh', '2025-05-12': 'Waisak', '2025-05-29': 'Kenaikan Isa Almasih', '2025-06-01': 'Lahir Pancila', '2025-06-07': 'Idul Adha', '2025-06-27': 'Tahun Baru Islam', '2025-08-17': 'Kemerdekaan RI', '2025-09-05': 'Maulid Nabi', '2025-12-25': 'Natal'};
             
-            const bodyImages = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg'];
-            const filterImages = ['7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg'];
-            const modalImages = ['13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg'];
+            // --- KUMPULAN GAMBAR BARU ---
+            // Membuat array berisi nama file dari '1.jpg' hingga '29.jpg'
+            const allImages = Array.from({ length: 29 }, (_, i) => `${i + 1}.jpg`);
 
             const ui = {
                 body: document.body,
@@ -358,24 +517,29 @@
                 searchButton: document.getElementById('searchButton'),
                 results: document.getElementById('results'),
                 status: document.getElementById('status'), memberModal: document.getElementById('memberModal'),
-                modalContent: document.querySelector('.modal-content'),
+                modalContent: document.querySelector('#memberModal .modal-content'), // Target modal anggota secara spesifik
                 modalGroupName: document.getElementById('modalGroupName'), modalMemberList: document.getElementById('modalMemberList'),
-                closeModalButton: document.getElementById('closeModalButton'), modalGroupLink: document.getElementById('modalGroupLink')
+                closeModalButton: document.getElementById('closeModalButton'), modalGroupLink: document.getElementById('modalGroupLink'),
+                reportModal: document.getElementById('reportModal'),
+                closeReportModalButton: document.getElementById('closeReportModalButton'),
             };
             
-            let memberData = [], fullSchedule = [], scheduleOverrides = {}, currentBodyImageIndex = 0;
+            let currentBodyImageIndex = 0;
 
             function changeBodyBackground() {
-                currentBodyImageIndex = (currentBodyImageIndex + 1) % bodyImages.length;
-                ui.body.style.backgroundImage = `url('${bodyImages[currentBodyImageIndex]}')`;
+                // Menggunakan allImages untuk background body
+                currentBodyImageIndex = (currentBodyImageIndex + 1) % allImages.length;
+                ui.body.style.backgroundImage = `url('${allImages[currentBodyImageIndex]}')`;
             }
             function setRandomFilterBackground() {
-                const randomIndex = Math.floor(Math.random() * filterImages.length);
-                ui.controlsSection.style.backgroundImage = `url('${filterImages[randomIndex]}')`;
+                 // Menggunakan allImages untuk background filter
+                const randomIndex = Math.floor(Math.random() * allImages.length);
+                ui.controlsSection.style.backgroundImage = `url('${allImages[randomIndex]}')`;
             }
             function setRandomModalBackground() {
-                const randomIndex = Math.floor(Math.random() * modalImages.length);
-                ui.modalContent.style.backgroundImage = `url('${modalImages[randomIndex]}')`;
+                // Menggunakan allImages untuk background modal
+                const randomIndex = Math.floor(Math.random() * allImages.length);
+                ui.modalContent.style.backgroundImage = `url('${allImages[randomIndex]}')`;
             }
 
             const toLocalDateString = d => {
@@ -449,6 +613,8 @@
                 }
             }
             
+            let fullSchedule = [];
+
             function generateFullSchedule() {
                 const schedule = [];
                 let currentDate = new Date(anchorDate.getTime());
@@ -460,7 +626,6 @@
                     const override = scheduleOverrides[dateString];
                     const sessions = [];
                     
-                    // Don't check shouldAffectSchedule to allow generating past schedules if needed, filtering will handle display
                     if (override) {
                         if (override.type === 'HANYA_PAGI') {
                             sessions.push({ time: 'Pagi', group: groups[currentGroupIndex % groups.length] });
@@ -492,18 +657,31 @@
                 const session = currentHour < 12 ? 'Pagi' : 'Sore';
                 const title = session === 'Pagi' ? "Jadwal Piket Pagi Ini" : "Jadwal Piket Sore Ini";
                 const todayString = toLocalDateString(now);
-                const dateFormatted = `${daysOfWeekJP[now.getDay()]}, ${now.getDate()} ${now.toLocaleString('id-ID', { month: 'long' })} ${now.getFullYear()}`;
+                const dayIndex = now.getDay();
+                const kanjiDay = daysOfWeekJP[dayIndex];
+                const dayClass = dayColorClasses[dayIndex];
+                const fullDate = `${now.getDate()} ${now.toLocaleString('id-ID', { month: 'long' })} ${now.getFullYear()}`;
+
 
                 const todaySchedule = fullSchedule.find(item => toLocalDateString(item.date) === todayString);
                 let contentHTML = '';
 
+                const renderCard = (cardContent) => {
+                    return `<div class="todays-picket-card">
+                                <div class="picket-title">${title}</div>
+                                <div class="picket-day-kanji ${dayClass}">${kanjiDay}</div>
+                                <div class="picket-date">${fullDate}</div>
+                                ${cardContent}
+                            </div>`;
+                };
+
                 if (!todaySchedule || todaySchedule.sessions.length === 0 || (scheduleOverrides[todayString] && scheduleOverrides[todayString].type === 'LIBUR')) {
-                    contentHTML = `<div class="todays-picket-card"><div class="picket-title">${title}</div><div class="picket-date">${dateFormatted}</div><div class="picket-group-name" style="font-size: 2.5rem;">Tidak Ada Piket</div></div>`;
+                    contentHTML = renderCard(`<div class="picket-group-name" style="font-size: 2.5rem;">Tidak Ada Piket</div>`);
                 } else {
                     const currentSession = todaySchedule.sessions.find(s => s.time === session);
 
                     if (!currentSession) {
-                        contentHTML = `<div class="todays-picket-card"><div class="picket-title">${title}</div><div class="picket-date">${dateFormatted}</div><div class="picket-group-name" style="font-size: 2.5rem;">Sesi Ini Libur</div></div>`;
+                        contentHTML = renderCard(`<div class="picket-group-name" style="font-size: 2.5rem;">Sesi Ini Libur</div>`);
                     } else {
                         const groupName = currentSession.group;
                         const groupInfo = memberData.find(g => g.group === groupName);
@@ -518,16 +696,16 @@
                            membersHTML = '<li>Hanya ketua yang terdata.</li>';
                         }
 
-                        contentHTML = `
-                            <div class="todays-picket-card">
-                                <div class="picket-title">${title}</div>
-                                <div class="picket-date">${dateFormatted}</div>
+                        const mainContent = `
                                 <div class="picket-group-name">${groupName}</div>
                                 <div class="picket-leader">Ketua: ${leader.name}</div>
                                 <div class="picket-members-title">Anggota:</div>
                                 <ol class="picket-members">${membersHTML}</ol>
-                                <a href="${groupLink}" class="whatsapp-button" target="_blank" rel="noopener noreferrer">Grup WhatsApp</a>
-                            </div>`;
+                                <div class="button-container">
+                                    <button class="report-button" id="openReportButton">Daily Report</button>
+                                    <a href="${groupLink}" class="whatsapp-button" target="_blank" rel="noopener noreferrer">Grup WhatsApp</a>
+                                </div>`;
+                        contentHTML = renderCard(mainContent);
                     }
                 }
                 ui.todaysPicketContainer.innerHTML = contentHTML;
@@ -544,7 +722,11 @@
                 let resultsFound = false;
                 schedule.forEach(item => {
                     const date = item.date;
+                    const dayIndex = date.getDay();
+                    const dayClass = dayColorClasses[dayIndex];
+                    const dayKanji = daysOfWeekJP[dayIndex];
                     const dateFormatted = `${date.getDate()} ${date.toLocaleString('id-ID', { month: 'long' })}`;
+                    const dayHTML = `<span class="${dayClass} kanji-day">${dayKanji}</span>, ${date.getFullYear()}`;
                     const holidayTag = item.holiday ? `<div class="holiday-tag">${item.holiday}</div>` : '';
                     const dateString = toLocalDateString(date);
                     const override = scheduleOverrides[dateString];
@@ -562,7 +744,7 @@
                     }
                     if (cardShouldBeDisplayed) {
                          resultsFound = true;
-                         ui.results.innerHTML += `<div class="schedule-card"><div class="card-header"><div class="date-info"><div class="date">${dateFormatted}</div><div class="day">${daysOfWeekJP[date.getDay()]}, ${date.getFullYear()}</div></div>${holidayTag}</div><div class="card-session">${sessionsHTML}</div></div>`;
+                         ui.results.innerHTML += `<div class="schedule-card"><div class="card-header"><div class="date-info"><div class="date">${dateFormatted}</div><div class="day">${dayHTML}</div></div>${holidayTag}</div><div class="card-session">${sessionsHTML}</div></div>`;
                     }
                 });
                  if(!resultsFound){
@@ -634,7 +816,7 @@
             }
 
             async function init() {
-                ui.body.style.backgroundImage = `url('${bodyImages[0]}')`;
+                ui.body.style.backgroundImage = `url('${allImages[0]}')`;
                 setInterval(changeBodyBackground, 10000);
                 setRandomFilterBackground();
 
@@ -654,8 +836,17 @@
 
                 ui.searchButton.addEventListener('click', applyFilters);
                 ui.results.addEventListener('click', e => { if (e.target.classList.contains('session-group')) openMemberModal(e.target.dataset.groupname); });
-                ui.closeModalButton.addEventListener('click', () => ui.memberModal.style.display = 'none');
+                ui.closeModalButton.addEventListener('click', () => { ui.memberModal.style.display = 'none'; });
                 ui.memberModal.addEventListener('click', e => { if (e.target === ui.memberModal) ui.memberModal.style.display = 'none'; });
+
+                // Event listeners untuk modal laporan harian
+                ui.todaysPicketContainer.addEventListener('click', e => {
+                    if (e.target.id === 'openReportButton') {
+                        ui.reportModal.style.display = 'flex';
+                    }
+                });
+                ui.closeReportModalButton.addEventListener('click', () => { ui.reportModal.style.display = 'none'; });
+                ui.reportModal.addEventListener('click', e => { if (e.target === ui.reportModal) ui.reportModal.style.display = 'none'; });
             }
             
             init();
